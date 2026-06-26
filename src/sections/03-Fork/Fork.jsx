@@ -1,3 +1,4 @@
+import { School, Users, ArrowRight } from "lucide-react";
 import { useTrack } from "../../context/TrackContext";
 
 function Fork() {
@@ -16,86 +17,119 @@ function Fork() {
   };
 
   return (
-    <section className="min-h-screen bg-parchment flex items-center justify-center px-6 py-20">
-      <div className="max-w-6xl w-full">
-        <div className="text-center mb-14">
-          <p className="text-slate uppercase tracking-[0.25em] text-sm mb-3">
-            Choose Your Experience
+    <section className="min-h-screen bg-gradient-to-br from-parchment via-white to-stone flex items-center justify-center px-6 py-24">
+      <div className="max-w-7xl w-full">
+
+        {/* Heading */}
+        <div className="text-center mb-20">
+          <p className="font-mono uppercase tracking-[0.35em] text-accentDeep text-sm mb-4">
+            CHOOSE YOUR EXPERIENCE
           </p>
 
-          <h2 className="font-display text-4xl md:text-5xl text-ink">
+          <h2 className="font-display text-5xl md:text-6xl text-ink">
             Choose Your Path
           </h2>
 
-          <p className="text-slate mt-4 max-w-2xl mx-auto">
-            Whether you're protecting students at scale or keeping loved ones
-            close, explore the experience designed for you.
+          <div className="divider-teardrop text-gold my-8">
+            <span className="bullet"></span>
+          </div>
+
+          <p className="text-slate text-lg leading-8 max-w-3xl mx-auto">
+            Whether you're protecting students at scale or staying connected
+            with loved ones, discover the experience crafted for you.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+
           {/* Institution Card */}
           <div
             onClick={() => handleSelect("institution")}
-            className={`cursor-pointer rounded-3xl border bg-white p-10 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
+            className={`group cursor-pointer rounded-[32px]
+            border p-10 bg-gradient-to-br from-white to-stone/40
+            transition-all duration-500
+            hover:-translate-y-2 hover:shadow-2xl
+            ${
               activeTrack === "institution"
-                ? "border-accent shadow-xl ring-2 ring-accent/20"
+                ? "border-accent ring-2 ring-accent/20 shadow-2xl"
                 : "border-stone"
             }`}
           >
-            <div className="mb-6">
-              <span className="text-xs uppercase tracking-[0.2em] text-accentDeep">
-                Institutions
-              </span>
+            <div className="flex items-center justify-between mb-8">
+
+              <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-accent/10">
+                <School className="w-8 h-8 text-accentDeep" />
+              </div>
+
+              <ArrowRight className="w-5 h-5 text-slate group-hover:translate-x-2 transition-transform duration-300" />
+
             </div>
 
-            <h3 className="text-3xl font-semibold text-ink mb-4">
+            <p className="uppercase tracking-[0.3em] text-xs text-accentDeep mb-3">
+              Institutions
+            </p>
+
+            <h3 className="font-display text-3xl text-ink mb-5">
               For Schools & Institutions
             </h3>
 
-            <p className="text-slate leading-relaxed">
-              Safety, visibility, and peace of mind for schools, campuses,
-              and organizations responsible for student wellbeing.
+            <p className="text-slate leading-8">
+              Safety, visibility, and peace of mind for schools, universities,
+              and educational organizations responsible for student wellbeing.
             </p>
 
-            {activeTrack === "institution" && (
-              <span className="inline-block mt-6 text-sm font-medium text-accentDeep">
-                ✓ Selected
-              </span>
-            )}
+            <div className="mt-10 flex items-center gap-2 text-accentDeep font-medium">
+              <span>Explore</span>
+              <ArrowRight className="w-4 h-4" />
+            </div>
           </div>
 
           {/* Family Card */}
           <div
             onClick={() => handleSelect("family")}
-            className={`cursor-pointer rounded-3xl border bg-white p-10 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
+            className={`group cursor-pointer rounded-[32px]
+            border p-10 bg-gradient-to-br from-white to-stone/40
+            transition-all duration-500
+            hover:-translate-y-2 hover:shadow-2xl
+            ${
               activeTrack === "family"
-                ? "border-accent shadow-xl ring-2 ring-accent/20"
+                ? "border-accent ring-2 ring-accent/20 shadow-2xl"
                 : "border-stone"
             }`}
           >
-            <div className="mb-6">
-              <span className="text-xs uppercase tracking-[0.2em] text-accentDeep">
-                Family
-              </span>
+            <div className="flex items-center justify-between mb-8">
+
+              <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-accent/10">
+                <Users className="w-8 h-8 text-accentDeep" />
+              </div>
+
+              <ArrowRight className="w-5 h-5 text-slate group-hover:translate-x-2 transition-transform duration-300" />
+
             </div>
 
-            <h3 className="text-3xl font-semibold text-ink mb-4">
+            <p className="uppercase tracking-[0.3em] text-xs text-accentDeep mb-3">
+              Family
+            </p>
+
+            <h3 className="font-display text-3xl text-ink mb-5">
               For Families
             </h3>
 
-            <p className="text-slate leading-relaxed">
+            <p className="text-slate leading-8">
               A beautiful and secure way to stay connected with children,
-              parents, and loved ones through everyday life.
+              parents, grandparents, and loved ones through thoughtful
+              technology.
             </p>
 
-            {activeTrack === "family" && (
-              <span className="inline-block mt-6 text-sm font-medium text-accentDeep">
-                ✓ Selected
-              </span>
-            )}
+            <div className="mt-10 flex items-center gap-2 text-accentDeep font-medium">
+              <span>Explore</span>
+              <ArrowRight className="w-4 h-4" />
+            </div>
           </div>
+
         </div>
+
       </div>
     </section>
   );
