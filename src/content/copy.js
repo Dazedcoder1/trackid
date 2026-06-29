@@ -23,14 +23,81 @@ export const COPY = {
   },
 
   complianceCase: {
-    eyebrow: 'The problem with trackers',
-    headline: 'A tracker a child refuses to wear protects no one.',
-    body: 'Placeholder — compliance/retention argument TBD.',
-    stats: [
-      { value: '—', label: 'Placeholder stat 1' }, // TODO: confirm stat
-      { value: '—', label: 'Placeholder stat 2' }, // TODO: confirm stat
-    ],
+  eyebrow: "Compliance Case",
+
+  headline: "A tracker a child refuses to wear protects no one.",
+
+  body:
+    "Traditional GPS trackers are often removed, forgotten or hidden. TrakID is designed as premium jewellery that children actually choose to wear.",
+
+  statistic: {
+    value: "XX%",
+    title: "Higher Daily Wear Compliance",
+    subtitle: "Compared with traditional GPS trackers",
   },
+
+  valueCards: [
+    {
+      title: "Acceptance",
+      description: "Designed to feel familiar and desirable.",
+    },
+    {
+      title: "Daily Wear",
+      description: "Comfort encourages consistent everyday use.",
+    },
+    {
+      title: "Continuous Safety",
+      description: "Protection only works when it's worn.",
+    },
+  ],
+
+  journey: [
+    "Removed",
+    "Hidden",
+    "Forgotten",
+    "Always Worn",
+  ],
+
+  comparison: [
+    {
+      traditional: "Looks like a gadget",
+      trakid: "Looks like jewellery",
+    },
+    {
+      traditional: "Bulky to wear",
+      trakid: "Comfortable all day",
+    },
+    {
+      traditional: "Frequently removed",
+      trakid: "Children wear it voluntarily",
+    },
+    {
+      traditional: "Lower compliance",
+      trakid: "Higher compliance",
+    },
+  ],
+
+  benefits: [
+    {
+      title: "Looks Like Jewellery",
+      description:
+        "Designed as an accessory children enjoy wearing.",
+    },
+    {
+      title: "Children Actually Wear It",
+      description:
+        "Comfortable, familiar and easy to wear every day.",
+    },
+    {
+      title: "Better Compliance",
+      description:
+        "Higher wear time leads to more reliable protection.",
+    },
+  ],
+
+  quote:
+    "When children wear it by choice, protection becomes continuous.",
+},
 
   engineeringCredibility: {
     eyebrow: 'Built to last',

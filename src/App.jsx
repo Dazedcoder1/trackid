@@ -15,7 +15,7 @@ import Divider from './components/Divider';
 // import Hero from './sections/01-Hero/Hero';
 // import Reveal from './sections/02-Reveal/Reveal';
 // import Fork from './sections/03-Fork/Fork';
-// import ComplianceCase from './sections/04A-ComplianceCase/ComplianceCase';
+import ComplianceCase from './sections/04A-ComplianceCase/ComplianceCase';
 // import Anatomy from './sections/04B-Anatomy/Anatomy';
 // import EngineeringCredibility from './sections/05A-EngineeringCredibility/EngineeringCredibility';
 // import PeaceOfMind from './sections/05B-PeaceOfMind/PeaceOfMind';
@@ -65,7 +65,7 @@ function App() {
         {/* <Divider /> */}
 
         {/* --- Institutional Track --- */}
-        {/* <ComplianceCase /> */}
+        <ComplianceCase />
         {/* <Divider /> */}
         {/* <EngineeringCredibility /> */}
         {/* <Divider /> */}
