@@ -13,15 +13,15 @@ import Divider from './components/Divider';
 // Do NOT reorder: this IS the page's visual sequence.
 // -------------------------------------------------------------------
 // import Hero from './sections/01-Hero/Hero';
-// import Reveal from './sections/02-Reveal/Reveal';
+import Reveal from './sections/02-Reveal/Reveal';
 // import Fork from './sections/03-Fork/Fork';
 import ComplianceCase from './sections/04A-ComplianceCase/ComplianceCase';
-import Anatomy from './sections/04B-Anatomy/Anatomy';
-// import EngineeringCredibility from './sections/05A-EngineeringCredibility/EngineeringCredibility';
+// import Anatomy from './sections/04B-Anatomy/Anatomy';
+import EngineeringCredibility from './sections/05A-EngineeringCredibility/EngineeringCredibility';
 // import PeaceOfMind from './sections/05B-PeaceOfMind/PeaceOfMind';
 import InstitutionalAsk from './sections/06A-InstitutionalAsk/InstitutionalAsk';
 // import Invitation from './sections/06B-Invitation/Invitation';
-// import Closing from './sections/07-Closing/Closing';
+import Closing from './sections/07-Closing/Closing';
 
 function App() {
   // ---------------------------------------------------------------
@@ -59,7 +59,7 @@ function App() {
 
         {/* <Hero /> */}
         {/* <Divider /> */}
-        {/* <Reveal /> */}
+        { <Reveal /> }
         {/* <Divider /> */}
         {/* <Fork /> */}
         {/* <Divider /> */}
@@ -67,9 +67,9 @@ function App() {
         {/* --- Institutional Track --- */}
         <ComplianceCase />
         {/* <Divider /> */}
-        {/* <EngineeringCredibility /> */}
-        {/* <Divider /> */}
-        <InstitutionalAsk />
+        { <EngineeringCredibility /> }
+        { <Divider /> }
+        {/* <InstitutionalAsk /> */}
         {/* <Divider /> */}
 
         {/* --- Family Track --- */}
@@ -81,7 +81,7 @@ function App() {
         {/* <Divider /> */}
 
         {/* --- Shared Closing --- */}
-        {/* <Closing /> */}
+        { <Closing /> }
 
         {/* ============================================================ */}
         {/* Phase 1 infrastructure verification — remove after sections  */}
@@ -114,6 +114,20 @@ function App() {
           <p className="font-mono text-xs text-slate mt-6">
             ↑ ink · accent · gold · safe — all from tailwind.config.js tokens
           </p>
+
+          <h2 className="font-display text-6xl text-ink mb-6">
+            Safety at Scale
+          </h2>
+
+          <div className="divider-teardrop text-gold my-10">
+            <span className="bullet"></span>
+          </div>
+
+          <p className="text-slate text-xl leading-9">
+            Designed for schools, universities, and educational organizations
+            to provide visibility, safety, and peace of mind.
+          </p>
+
         </div>
 
       </div>
