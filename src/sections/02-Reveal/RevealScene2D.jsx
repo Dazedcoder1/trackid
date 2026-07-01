@@ -1,57 +1,94 @@
+// RevealScene2D.jsx
 import { useEffect, useRef } from 'react';
-import { motion, useAnimation } from 'framer-motion';
-import { COPY } from '../../content/copy';
 
-const { annotations } = COPY.reveal;
-
-// Dummy colored layers — replace src with real images from assets.js later
-const LAYERS = [
-  { key: 'shell',   label: 'Shell',       color: '#C9A66B', dy: -120, dx: 0   },
-  { key: 'pcb',     label: 'PCB',         color: '#5C7691', dy: 0,    dx: -100 },
-  { key: 'battery', label: 'Battery',     color: '#4C7A63', dy: 0,    dx: 100  },
-  { key: 'gps',     label: 'GPS Antenna', color: '#9DB4C7', dy: 120,  dx: 0   },
+const PIECES = [
+  { key: 'back',    src: '/assets/images/piece-back.png',    finalX: -300, label: 'Shell' },
+  { key: 'inner',   src: '/assets/images/piece-inner.png',   finalX: -150, label: 'Inner Casing' },
+  { key: 'pcb',     src: '/assets/images/piece-pcb.png',     finalX: 0,    label: 'PCB' },
+  { key: 'battery', src: '/assets/images/piece-battery.png', finalX: 150,  label: 'Battery' },
+  { key: 'front',   src: '/assets/images/piece-front.png',   finalX: 300,  label: 'Front Shell' },
 ];
 
-export default function RevealScene2D({ progress = 0 }) {
-  const layerRefs = useRef([]);
+function easeInOut(p) {
+  return p < 0.5
+    ? 2 * p * p
+    : 1 - Math.pow(-2 * p + 2, 2) / 2;
+}
+
+export default function RevealScene2D({ progressRef }) {
+  const pieceRefs = useRef([]);
   const labelRefs = useRef([]);
+  const currentX = useRef(PIECES.map(() => 0));
+  const rafRef = useRef(null);
 
   useEffect(() => {
-    LAYERS.forEach((layer, i) => {
-      const el = layerRefs.current[i];
-      if (!el) return;
-      el.style.transform = `translate(${layer.dx * progress}px, ${layer.dy * progress}px)`;
-    });
+    function animate() {
+      const p = progressRef.current;
+      const eased = easeInOut(p);
 
-    labelRefs.current.forEach((el, i) => {
-      if (!el) return;
-      el.style.opacity = progress > 0.5 ? (progress - 0.5) * 2 : 0;
-    });
-  }, [progress]);
+      PIECES.forEach((piece, i) => {
+        const targetX = piece.finalX * eased;
+
+        // each piece has slightly different lerp speed — outer pieces lag behind
+        const lerpSpeed = 0.06 + i * 0.01;
+        currentX.current[i] += (targetX - currentX.current[i]) * lerpSpeed;
+
+        const el = pieceRefs.current[i];
+        if (!el) return;
+
+        el.style.transform = `translateX(${currentX.current[i]}px)`;
+
+        if (piece.key === 'front') {
+          el.style.opacity = 1;
+        } else {
+          el.style.opacity = Math.min(1, p * 2);
+        }
+      });
+
+      labelRefs.current.forEach((el) => {
+        if (!el) return;
+        const labelOpacity = Math.min(1, Math.max(0, (p - 0.7) / 0.3));
+        el.style.opacity = labelOpacity;
+      });
+
+      rafRef.current = requestAnimationFrame(animate);
+    }
+
+    rafRef.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, []);
 
   return (
-    <div className="relative w-64 h-64 mx-auto">
+    <div className="relative w-full max-w-5xl mx-auto flex items-center justify-center" style={{ height: '380px' }}>
 
-      {LAYERS.map((layer, i) => (
+      {/* Radial glow behind pieces */}
+      <div
+        className="absolute rounded-full pointer-events-none"
+        style={{
+          width: '600px',
+          height: '300px',
+          background: 'radial-gradient(ellipse, rgba(157,180,199,0.12) 0%, transparent 70%)',
+        }}
+      />
+
+      {PIECES.map((piece, i) => (
         <div
-          key={layer.key}
-          ref={el => layerRefs.current[i] = el}
-          className="absolute inset-0 flex items-center justify-center transition-none"
-          style={{ willChange: 'transform' }}
+          key={piece.key}
+          className="absolute flex flex-col items-center"
+          ref={el => pieceRefs.current[i] = el}
+          style={{ opacity: piece.key === 'front' ? 1 : 0, willChange: 'transform, opacity' }}
         >
-          {/* Dummy colored block — swap for <img src={ASSETS.exploded[layer.key]} /> later */}
-          <div
-            className="w-24 h-24 rounded-xl opacity-80"
-            style={{ backgroundColor: layer.color }}
+          <img
+            src={piece.src}
+            alt={piece.label}
+            className="h-64 object-contain drop-shadow-[0_8px_24px_rgba(0,0,0,0.12)]"
           />
-
-          {/* Annotation label */}
           <span
             ref={el => labelRefs.current[i] = el}
-            className="absolute -right-28 font-mono text-xs uppercase tracking-widest text-accentDeep whitespace-nowrap"
+            className="font-mono text-xs uppercase tracking-widest text-accentDeep whitespace-nowrap mt-4"
             style={{ opacity: 0 }}
           >
-            {layer.label}
+            {piece.label}
           </span>
         </div>
       ))}
