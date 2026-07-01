@@ -116,7 +116,8 @@
 .connector-dot,
 .annotation {
   backface-visibility: hidden;
-  transform-style: preserve-3d;
+  transform-style: preserve-3d;}
+
 /* Reduced motion respect — CSS-level safety net.
    JS-level checks via useReducedMotion() are the primary mechanism,
    but this catches any raw CSS animations that slip through. */
