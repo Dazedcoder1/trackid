@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" style="background-color:#FAFAFA;">
+
+        <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#A3A3A3"/>
+            </marker>
+        </defs>
+        
+<rect x="200" y="50" width="400" height="320" rx="8" fill="#FFFFFF" stroke="#A3A3A3" stroke-width="1" />
+<text x="216" y="74" font-family="sans-serif" font-weight="bold" font-size="14" fill="#171717">Family Shop Ask</text>
+<rect x="230" y="100" width="340" height="40" rx="4" stroke="#A3A3A3" fill="none"/>
+<rect x="230" y="160" width="340" height="40" rx="4" stroke="#A3A3A3" fill="none"/>
+<rect x="230" y="220" width="160" height="30" rx="15" stroke="#0055FF" fill="#0055FF" opacity="0.1"/>
+<rect x="410" y="220" width="160" height="30" rx="15" stroke="#A3A3A3" fill="none"/>
+<rect x="230" y="280" width="340" height="50" rx="6" fill="#171717"/>
+<text x="400" y="305" font-family="sans-serif" fill="#FFFFFF" text-anchor="middle">Submit</text>
+</svg>

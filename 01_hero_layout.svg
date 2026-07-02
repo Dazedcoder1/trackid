@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" style="background-color:#FAFAFA;">
+
+        <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#A3A3A3"/>
+            </marker>
+        </defs>
+        
+<rect x="50" y="50" width="700" height="300" rx="8" fill="#FFFFFF" stroke="#A3A3A3" stroke-width="1" />
+<text x="66" y="74" font-family="sans-serif" font-weight="bold" font-size="14" fill="#171717">Hero Viewport</text>
+<text x="400" y="200" font-family="sans-serif" font-size="64" font-weight="bold" fill="#E5E5E5" text-anchor="middle" opacity="0.3">TrakID</text>
+<circle cx="400" cy="200" r="40" fill="#0055FF" opacity="0.8"/>
+<text x="400" y="310" font-family="sans-serif" font-size="14" fill="#737373" text-anchor="middle">Scroll to explore</text>
+<rect x="700" y="70" width="30" height="30" rx="15" fill="#E5E5E5"/>
+</svg>

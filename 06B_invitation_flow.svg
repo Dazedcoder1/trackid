@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350" style="background-color:#FAFAFA;">
+
+        <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#A3A3A3"/>
+            </marker>
+        </defs>
+        
+<rect x="50" y="150" width="120" height="50" rx="6" fill="#E5E5E5" stroke="#A3A3A3" stroke-width="1"/>
+<text x="110.0" y="171.0" font-family="sans-serif" font-size="12" fill="#171717" text-anchor="middle" dominant-baseline="middle">formSchema.js</text>
+<rect x="220" y="150" width="120" height="50" rx="6" fill="#E5E5E5" stroke="#A3A3A3" stroke-width="1"/>
+<text x="280.0" y="171.0" font-family="sans-serif" font-size="12" fill="#171717" text-anchor="middle" dominant-baseline="middle">handleChange(e)</text>
+<rect x="390" y="150" width="120" height="50" rx="6" fill="#0055FF" stroke="#A3A3A3" stroke-width="1"/>
+<text x="450.0" y="171.0" font-family="sans-serif" font-size="12" fill="#FFFFFF" text-anchor="middle" dominant-baseline="middle">submitLead()</text>
+<rect x="560" y="50" width="120" height="50" rx="6" fill="#D4AF37" stroke="#A3A3A3" stroke-width="1"/>
+<text x="620.0" y="71.0" font-family="sans-serif" font-size="12" fill="#FFFFFF" text-anchor="middle" dominant-baseline="middle">Validation Error</text>
+<rect x="560" y="250" width="120" height="50" rx="6" fill="#E5E5E5" stroke="#A3A3A3" stroke-width="1"/>
+<text x="620.0" y="271.0" font-family="sans-serif" font-size="12" fill="#171717" text-anchor="middle" dominant-baseline="middle">Success Inline Msg</text>
+<line x1="170" y1="175" x2="220" y2="175" stroke="#A3A3A3" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="340" y1="175" x2="390" y2="175" stroke="#A3A3A3" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="450" y1="150" x2="560" y2="75" stroke="#A3A3A3" stroke-width="2" marker-end="url(#arrowhead)"/>
+<rect x="490.0" y="102.5" width="30" height="20" fill="#FAFAFA"/>
+<text x="505.0" y="112.5" font-family="sans-serif" font-size="10" fill="#737373" text-anchor="middle" dominant-baseline="middle">Fail</text>
+<line x1="450" y1="200" x2="560" y2="275" stroke="#A3A3A3" stroke-width="2" marker-end="url(#arrowhead)"/>
+<rect x="490.0" y="227.5" width="30" height="20" fill="#FAFAFA"/>
+<text x="505.0" y="237.5" font-family="sans-serif" font-size="10" fill="#737373" text-anchor="middle" dominant-baseline="middle">Pass</text>
+</svg>

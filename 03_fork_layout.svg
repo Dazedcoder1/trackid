@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" style="background-color:#FAFAFA;">
+
+        <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#A3A3A3"/>
+            </marker>
+        </defs>
+        
+<rect x="150" y="100" width="220" height="250" rx="8" fill="#FFFFFF" stroke="#A3A3A3" stroke-width="1" />
+<text x="166" y="124" font-family="sans-serif" font-weight="bold" font-size="14" fill="#171717">For Schools & Institutions</text>
+<text x="166" y="142" font-family="sans-serif" font-size="11" fill="#737373">Management & bulk tracking.</text>
+<rect x="430" y="100" width="220" height="250" rx="8" fill="#FFFFFF" stroke="#A3A3A3" stroke-width="1" />
+<text x="446" y="124" font-family="sans-serif" font-weight="bold" font-size="14" fill="#171717">For Families</text>
+<text x="446" y="142" font-family="sans-serif" font-size="11" fill="#737373">Peace of mind & craftsmanship.</text>
+</svg>

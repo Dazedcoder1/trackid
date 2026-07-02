@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" style="background-color:#FAFAFA;">
+
+        <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#A3A3A3"/>
+            </marker>
+        </defs>
+        
+<rect x="50" y="50" width="700" height="300" rx="8" fill="#FFFFFF" stroke="#A3A3A3" stroke-width="1" />
+<text x="66" y="74" font-family="sans-serif" font-weight="bold" font-size="14" fill="#171717">Stylized Map Container</text>
+<circle cx="400" cy="200" r="120" fill="#0055FF" opacity="0.1"/>
+<circle cx="400" cy="200" r="120" stroke="#0055FF" stroke-dasharray="8 8" fill="none"/>
+<circle cx="420" cy="180" r="8" fill="#0055FF"/>
+<circle cx="420" cy="180" r="24" fill="#0055FF" opacity="0.2"><animate attributeName="r" values="8;24;8" dur="2s" repeatCount="indefinite"/></circle>
+</svg>
