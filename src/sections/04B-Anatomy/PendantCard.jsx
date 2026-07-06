@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { Plus } from "lucide-react";
+import { Plus, BadgeCheck } from "lucide-react";
 
 import { ASSETS } from "../../content/assets";
 import { EASE, fadeUp } from "../../motion/variants";
@@ -11,6 +11,7 @@ export default function PendantCard({ item }) {
   const cardRef = useRef(null);
   const [showBack, setShowBack] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
 
   const image =
     ASSETS.pendants[item.id]?.heroImage ||
@@ -42,6 +43,7 @@ export default function PendantCard({ item }) {
   function handleMouseLeave() {
     mouseX.set(0);
     mouseY.set(0);
+    setIsHovering(false);
   }
 
   return (
@@ -49,6 +51,7 @@ export default function PendantCard({ item }) {
       ref={cardRef}
       {...fadeUp}
       onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={handleMouseLeave}
       style={
         shouldReduceMotion
@@ -81,6 +84,37 @@ export default function PendantCard({ item }) {
         style={shouldReduceMotion ? undefined : { left: glowX, top: glowY }}
       />
 
+      {/* Holographic foil sweep — a jewellery-counter sheen that crosses the
+          whole card diagonally on hover, on top of the cursor glow */}
+      {!shouldReduceMotion && (
+        <motion.div
+          aria-hidden="true"
+          initial={{ x: "-130%" }}
+          animate={isHovering ? { x: "130%" } : { x: "-130%" }}
+          transition={{ duration: 1.1, ease: EASE }}
+          className="pointer-events-none absolute inset-y-0 w-1/2 -skew-x-12 z-20 mix-blend-overlay"
+          style={{
+            background:
+              "linear-gradient(100deg, transparent 20%, rgba(255,255,255,0.55) 45%, rgba(201,166,107,0.4) 55%, transparent 80%)",
+          }}
+        />
+      )}
+
+      {/* Hallmark stamp — a small jeweller's mark that "stamps" into place
+          when the card enters view, echoing the engraving on the reverse */}
+      <motion.div
+        initial={shouldReduceMotion ? false : { scale: 1.8, opacity: 0, rotate: -18 }}
+        whileInView={{ scale: 1, opacity: 1, rotate: 0 }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.35, ease: [0.34, 1.56, 0.64, 1], delay: 0.15 }}
+        className="absolute right-8 top-8 z-30 flex items-center gap-1.5 rounded-full border border-gold/30 bg-parchment/90 px-3 py-1.5 shadow-sm"
+      >
+        <BadgeCheck size={13} strokeWidth={2} className="text-accent" />
+        <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">
+          Hallmarked
+        </span>
+      </motion.div>
+
       {/* Image — click to flip to the back / engraving side */}
 
       <div className="relative flex justify-center py-10" style={{ transformStyle: "preserve-3d" }}>
@@ -90,6 +124,25 @@ export default function PendantCard({ item }) {
           className="relative z-10 [perspective:1000px]"
           aria-label={showBack ? "Show front of pendant" : "Show back of pendant"}
         >
+          {/* Rotating bezel ring — a slow, jeweller's-loupe halo that frames
+              the piece and quickens gently on hover */}
+          {!shouldReduceMotion && (
+            <motion.div
+              aria-hidden="true"
+              animate={{ rotate: 360 }}
+              transition={{ duration: isHovering ? 6 : 16, repeat: Infinity, ease: "linear" }}
+              className="pointer-events-none absolute -inset-6 rounded-full"
+              style={{
+                background:
+                  "conic-gradient(from 0deg, transparent 0%, rgba(201,166,107,0.5) 12%, transparent 24%, transparent 50%, rgba(201,166,107,0.35) 62%, transparent 74%)",
+                WebkitMaskImage:
+                  "radial-gradient(closest-side, transparent calc(100% - 2px), black calc(100% - 2px) calc(100% - 1px), transparent 100%)",
+                maskImage:
+                  "radial-gradient(closest-side, transparent calc(100% - 2px), black calc(100% - 2px) calc(100% - 1px), transparent 100%)",
+              }}
+            />
+          )}
+
           <motion.div
             animate={{ rotateY: showBack ? 180 : 0 }}
             transition={{ duration: 0.6, ease: EASE }}
@@ -218,13 +271,23 @@ export default function PendantCard({ item }) {
         className="overflow-hidden"
       >
         <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-3 font-mono text-xs uppercase tracking-wider text-slate">
-          {(item.specs || []).map((spec) => (
-            <div key={spec.label} className="flex flex-col gap-1">
+          {(item.specs || []).map((spec, index) => (
+            <motion.div
+              key={spec.label}
+              initial={false}
+              animate={
+                expanded
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: shouldReduceMotion ? 0 : 6 }
+              }
+              transition={{ duration: 0.3, ease: EASE, delay: expanded ? index * 0.05 : 0 }}
+              className="flex flex-col gap-1"
+            >
               <dt className="text-accent/70">{spec.label}</dt>
               <dd className="text-ink normal-case tracking-normal text-sm font-body">
                 {spec.value}
               </dd>
-            </div>
+            </motion.div>
           ))}
         </dl>
       </motion.div>
