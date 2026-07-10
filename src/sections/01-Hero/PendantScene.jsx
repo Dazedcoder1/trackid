@@ -4,29 +4,22 @@ import { Environment, Center, useGLTF } from '@react-three/drei';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 // ── MODEL LOADER ────────────────────────────────────────────────────────
-// When you download your GLB, place it in public/models/pendant.glb
-// and uncomment the useGLTF line and the <primitive> line.
 function UniversalModel() {
-  // const { scene } = useGLTF('/models/pendant.glb'); 
+  const { scene } = useGLTF('/assets/models/pendant.glb'); 
   
   return (
     <mesh>
       {/* 
-        This box is a placeholder. 
-        Once you have a real model, delete these two lines (boxGeometry and meshStandardMaterial)
-        and uncomment the <primitive object={scene} /> line below.
+        MASTER SCALE: The model is naturally too big. 
+        Adjust this number (0.15, 0.5, 2, etc.) until the model 
+        looks perfectly sized when the page first loads.
       */}
-      <boxGeometry args={[2, 2, 2]} />
-      <meshStandardMaterial color="#C0C0C0" metalness={0.9} roughness={0.2} />
-      
-      {/* <primitive object={scene} /> */}
+      <primitive object={scene} scale={0.15} />
     </mesh>
   );
 }
 
 // ── ANIMATED STAGE ──────────────────────────────────────────────────────
-// This component reads the GSAP values from Hero.jsx every single frame
-// and applies them directly to the 3D group.
 function AnimatedStage({ scrollTransformRef }) {
   const groupRef = useRef();
   const prefersReducedMotion = useReducedMotion();
@@ -44,8 +37,8 @@ function AnimatedStage({ scrollTransformRef }) {
 
   return (
     <group ref={groupRef}>
-      {/* Center automatically calculates the bounding box of ANY model and centers it */}
-      <Center top>
+      {/* Center without "top" forces the geometric center of the model perfectly into the middle */}
+      <Center>
         <UniversalModel />
       </Center>
     </group>

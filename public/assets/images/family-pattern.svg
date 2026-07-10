@@ -1,0 +1,12 @@
+<svg width="240" height="240" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="#D4A85A" stroke-width="1.5" opacity="0.55">
+    <path d="M120 40
+             C165 40 195 70 195 115
+             C195 165 155 195 120 205
+             C85 195 45 165 45 115
+             C45 70 75 40 120 40Z"></path>
+
+    <circle cx="120" cy="120" r="50"></circle>
+    <circle cx="120" cy="120" r="24"></circle>
+  </g>
+</svg>

@@ -4,21 +4,26 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink:        '#0E1116',   // primary text, dark surfaces
-        parchment:  '#F7F5F0',   // default page background
-        stone:      '#E8E6E0',   // secondary surfaces, cards
-        slate:      '#6B7378',   // secondary text, captions
-        accent:     '#9DB4C7',   // sapphire — semantic brand accent
-        accentDeep: '#5C7691',   // darker accent, eyebrows/links on light bg
-        gold:       '#C9A66B',   // rose-gold — rare, institutional accent
-        safe:       '#4C7A63',   // "safe zone" state — muted sage, NEVER stock green
-        alert:      '#A6553E',   // "SOS" state — muted brick, NEVER stock red
+        // Obermann Authentic Dark Theme
+        ink:        '#FFFFFF',   // Swapped: Ink is now pure white for text
+        parchment:  '#050205',   // Swapped: Parchment is now void black for backgrounds
+        stone:      '#130611',   // Deep plum for cards and surfaces
+        slate:      '#A1A1AA',   // Muted silver for descriptions
+        accent:     '#FFFFFF',   // Pure white for major action items
+        accentDeep: '#280E25',   // Deep plum accent
+        gold:       '#C9A66B',   // Retained if needed for jewelry accents
+        safe:       '#34D399',   
+        alert:      '#F87171',   
       },
       fontFamily: {
-        display: ['Fraunces', 'serif'],   // headlines + wordmark ONLY
-        body:    ['Inter', 'sans-serif'], // all paragraph copy, nav, buttons
-        mono:    ['JetBrains Mono', 'monospace'], // specs, eyebrows, captions ONLY
+        display: ['Plus Jakarta Sans', 'Inter', 'sans-serif'], 
+        body:    ['Inter', 'sans-serif'],
+        mono:    ['JetBrains Mono', 'monospace'],
       },
+      letterSpacing: {
+        kicker: '.35em',
+        premium: '.15em',
+      }
     },
   },
   plugins: [],
