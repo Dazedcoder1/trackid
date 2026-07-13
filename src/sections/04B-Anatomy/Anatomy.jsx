@@ -294,11 +294,66 @@ function StatNumber({ value, suffix, inView }) {
   );
 }
 
+// ─── 3D Tilt Card — cursor-driven tilt + glare, dims siblings ──────────────
+function TiltCard({ children, className = "", onHoverChange, dimmed, reducedMotion }) {
+  const ref = useRef(null);
+  const rotateX = useMotionValue(0);
+  const rotateY = useMotionValue(0);
+  const glareX = useMotionValue(50);
+  const glareY = useMotionValue(50);
+
+  const handleMouseMove = (e) => {
+    if (reducedMotion || !ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width;
+    const py = (e.clientY - rect.top) / rect.height;
+    animate(rotateY, (px - 0.5) * 14, { duration: 0.2, ease: EASE });
+    animate(rotateX, (0.5 - py) * 14, { duration: 0.2, ease: EASE });
+    glareX.set(px * 100);
+    glareY.set(py * 100);
+  };
+
+  const handleMouseLeave = () => {
+    animate(rotateX, 0, { duration: 0.4, ease: EASE });
+    animate(rotateY, 0, { duration: 0.4, ease: EASE });
+    onHoverChange?.(false);
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      style={{ rotateX, rotateY, transformPerspective: 900 }}
+      animate={{
+        scale: dimmed ? 0.98 : 1,
+        opacity: dimmed ? 0.55 : 1,
+        filter: dimmed ? "blur(1.5px)" : "blur(0px)",
+      }}
+      transition={{ duration: 0.3, ease: EASE }}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => onHoverChange?.(true)}
+      onMouseLeave={handleMouseLeave}
+      className={`relative ${className}`}
+    >
+      {!reducedMotion && (
+        <motion.div
+          style={{
+            background: `radial-gradient(220px circle at ${glareX.get()}% ${glareY.get()}%, rgba(201,166,107,0.16), transparent 70%)`,
+          }}
+          className="pointer-events-none absolute inset-0 rounded-3xl transition-opacity"
+        />
+      )}
+      {children}
+    </motion.div>
+  );
+}
+
 export default function Anatomy() {
   const shouldReduceMotion = useReducedMotion();
   const data = COPY.anatomy;
 
+  const [hoveredPendant, setHoveredPendant] = useState(null);
   const [activeFilter, setActiveFilter] = useState("All");
+  
   const filteredItems = data.collectionItems.filter(
     (item) => activeFilter === "All" || item.tag === activeFilter
   );

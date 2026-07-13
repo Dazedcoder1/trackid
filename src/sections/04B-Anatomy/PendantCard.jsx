@@ -240,85 +240,88 @@ export default function PendantCard({ item, index = 1, total = 4 }) {
           />
         )}
 
-      <div className="relative flex justify-center overflow-hidden py-2 mb-2" style={{ transformStyle: "preserve-3d" }}>
-        <button
-          type="button"
-          onClick={() => setShowBack((v) => !v)}
-          className="relative z-10 [perspective:1000px]"
-          aria-label={showBack ? "Show front of pendant" : "Show back of pendant"}
-        >
-          <div className="h-px w-8 bg-gold/50" />
-          <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-ink/70">
-            {item.motifNotes[0].title}
-          </span>
-        </motion.div>
-
-        {/* Bottom-right annotation */}
-        <motion.div
-          initial={shouldReduceMotion ? false : { opacity: 0, x: 10 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: EASE }}
-          className="absolute bottom-6 right-6 z-30 flex items-center gap-3"
-        >
-          <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-ink/70">
-            {item.motifNotes[1].title}
-          </span>
-          <div className="h-px w-8 bg-gold/50" />
-        </motion.div>
-
-        {/* The pendant itself — fills almost the entire showcase, leaving
-            only a thin border of black at the panel's edges */}
-        <div className="relative flex h-full w-full items-center justify-center p-6 [perspective:1200px] lg:p-10">
-          <motion.div
-            animate={{ rotateY: showBack ? 180 : 0 }}
-            transition={{ duration: 0.6, ease: EASE }}
-            style={{
-  width: 220,
-  height: 220,
-}}
-className="relative overflow-hidden rounded-3xl lg:!h-[240px] lg:!w-[240px]"
+        <div className="relative flex justify-center overflow-hidden py-2 mb-2" style={{ transformStyle: "preserve-3d" }}>
+          
+          {/* FIX: Correctly closed the button tag */}
+          <button
+            type="button"
+            onClick={() => setShowBack((v) => !v)}
+            className="relative z-10 [perspective:1000px]"
+            aria-label={showBack ? "Show front of pendant" : "Show back of pendant"}
           >
-            <motion.img
-              src={image}
-              alt={item.name}
-              animate={
-                shouldReduceMotion
-                  ? undefined
-                  : { y: [-4, 4, -4], rotate: [-1.5, 1.5, -1.5] }
-              }
-              transition={{ duration: 6, repeat: Infinity, ease: EASE }}
-              style={{ backfaceVisibility: "hidden", objectFit: "contain" }}
-              className="absolute inset-0 h-full w-full drop-shadow-[0_18px_34px_rgba(0,0,0,0.45)] transition-transform duration-500 group-hover:scale-105"
-            />
-            <img
-              src={backImage}
-              alt={`${item.name} — reverse`}
-              style={{
-                backfaceVisibility: "hidden",
-                transform: "rotateY(180deg)",
-                objectFit: "contain",
-              }}
-              className="absolute inset-0 h-full w-full drop-shadow-[0_18px_34px_rgba(0,0,0,0.45)]"
-            />
-          </motion.div>
+            <div className="h-px w-8 bg-gold/50" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-ink/70">
+              {item.motifNotes[0].title}
+            </span>
+          </button>
 
-        {/* Bottom Annotation */}
-        <motion.div
-          initial={shouldReduceMotion ? false : { opacity: 0, x: 10 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: EASE }}
-          className="absolute right-0 bottom-6 text-right"
-        >
-          <div className="flex items-center justify-end gap-3">
-            <div className="h-px w-12 bg-gold/40" />
-            <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-accent">
+          {/* Bottom-right annotation */}
+          <motion.div
+            initial={shouldReduceMotion ? false : { opacity: 0, x: 10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: EASE }}
+            className="absolute bottom-6 right-6 z-30 flex items-center gap-3"
+          >
+            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-ink/70">
               {item.motifNotes[1].title}
             </span>
+            <div className="h-px w-8 bg-gold/50" />
+          </motion.div>
+
+          {/* The pendant itself */}
+          <div className="relative flex h-full w-full items-center justify-center p-6 [perspective:1200px] lg:p-10">
+            <motion.div
+              animate={{ rotateY: showBack ? 180 : 0 }}
+              transition={{ duration: 0.6, ease: EASE }}
+              style={{
+                width: 220,
+                height: 220,
+              }}
+              className="relative overflow-hidden rounded-3xl lg:!h-[240px] lg:!w-[240px]"
+            >
+              <motion.img
+                src={image}
+                alt={item.name}
+                animate={
+                  shouldReduceMotion
+                    ? undefined
+                    : { y: [-4, 4, -4], rotate: [-1.5, 1.5, -1.5] }
+                }
+                transition={{ duration: 6, repeat: Infinity, ease: EASE }}
+                style={{ backfaceVisibility: "hidden", objectFit: "contain" }}
+                className="absolute inset-0 h-full w-full drop-shadow-[0_18px_34px_rgba(0,0,0,0.45)] transition-transform duration-500 group-hover:scale-105"
+              />
+              <img
+                src={backImage}
+                alt={`${item.name} — reverse`}
+                style={{
+                  backfaceVisibility: "hidden",
+                  transform: "rotateY(180deg)",
+                  objectFit: "contain",
+                }}
+                className="absolute inset-0 h-full w-full drop-shadow-[0_18px_34px_rgba(0,0,0,0.45)]"
+              />
+            </motion.div>
+
+            {/* Bottom Annotation */}
+            <motion.div
+              initial={shouldReduceMotion ? false : { opacity: 0, x: 10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, ease: EASE }}
+              className="absolute right-0 bottom-6 text-right"
+            >
+              <div className="flex items-center justify-end gap-3">
+                <div className="h-px w-12 bg-gold/40" />
+                <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-accent">
+                  {item.motifNotes[1].title}
+                </span>
+              </div>
+            </motion.div>
           </div>
-        </motion.div>
-      </div>
+        </div> {/* FIX: Closed the 3D wrapper div */}
+      </div> {/* FIX: Closed the main IMAGE PANEL div */}
 
       {/* Growable middle content — flex-1 lets this stretch so the footer
           below always lands at the same y across cards, regardless of how
