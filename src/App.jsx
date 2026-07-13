@@ -3,7 +3,7 @@
 // smooth scroll, renders section slots in order. Section developers
 // uncomment their imports as they build.
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -17,7 +17,6 @@ gsap.registerPlugin(ScrollTrigger);
 // Section imports — uncomment as each section is built.
 // Do NOT reorder: this IS the page's visual sequence.
 // -------------------------------------------------------------------
-import Intro from './sections/01-Hero/Intro';
 import Hero from './sections/01-Hero/Hero';
 import Reveal from './sections/02-Reveal/Reveal';
 import Fork from './sections/03-Fork/Fork';
@@ -30,17 +29,6 @@ import Invitation from './sections/06B-Invitation/Invitation';
 import Closing from './sections/07-Closing/Closing';
 
 function App() {
-  const [introComplete, setIntroComplete] = useState(false);
-
-  // Lock scroll while intro is playing to prevent accidental GSAP triggers
-  useEffect(() => {
-    if (!introComplete) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-  }, [introComplete]);
-
   // ---------------------------------------------------------------
   // Lenis smooth-scroll — initialized once at the App root.
   // Synced with GSAP ScrollTrigger so pinning and scrubbed timelines
@@ -56,6 +44,9 @@ function App() {
       smoothWheel: true,
     });
 
+    // ADDED: Expose Lenis globally so Hero.jsx can pause it during the intro sequence
+    window.lenis = lenis;
+
     // Push Lenis scroll events to ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
 
@@ -69,6 +60,9 @@ function App() {
     return () => {
       gsap.ticker.remove(tickerCallback);
       lenis.destroy();
+      
+      // ADDED: Clean up the global reference on unmount
+      delete window.lenis; 
     };
   }, []);
 
@@ -81,8 +75,6 @@ function App() {
         {/* The Divider component goes between each section boundary.    */}
         {/* ============================================================ */}
 
-        {!introComplete && <Intro onComplete={() => setIntroComplete(true)} />}
-        
         <Hero />
         {/* <Divider /> */}
         <Reveal />

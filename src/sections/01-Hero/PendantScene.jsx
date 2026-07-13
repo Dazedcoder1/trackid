@@ -1,3 +1,4 @@
+// PendantScene.jsx
 import { useRef, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Environment, Center, useGLTF } from '@react-three/drei';
@@ -9,39 +10,57 @@ function UniversalModel() {
   
   return (
     <mesh>
-      {/* 
-        MASTER SCALE: The model is naturally too big. 
-        Adjust this number (0.15, 0.5, 2, etc.) until the model 
-        looks perfectly sized when the page first loads.
-      */}
       <primitive object={scene} scale={0.15} />
     </mesh>
   );
 }
 
-// ── ANIMATED STAGE ──────────────────────────────────────────────────────
+// ── ANIMATED STAGE & LIGHTING ───────────────────────────────────────────
 function AnimatedStage({ scrollTransformRef }) {
   const groupRef = useRef();
+  const ambientLightRef = useRef();
+  const mainLightRef = useRef();
+  const fillLightRef = useRef();
+  
   const prefersReducedMotion = useReducedMotion();
 
   useFrame(() => {
-    if (!groupRef.current || prefersReducedMotion || !scrollTransformRef?.current) return;
+    if (!scrollTransformRef?.current) return;
 
-    const { x, y, z, rotX, rotY, rotZ, scale } = scrollTransformRef.current;
+    const { x, y, z, rotX, rotY, rotZ, scale, lightIntensity } = scrollTransformRef.current;
     
-    // Apply GSAP coordinates to the 3D group
-    groupRef.current.position.set(x, y, z);
-    groupRef.current.rotation.set(rotX, rotY, rotZ);
-    groupRef.current.scale.set(scale, scale, scale);
+    // 1. Move the 3D Group
+    if (groupRef.current && !prefersReducedMotion) {
+      groupRef.current.position.set(x, y, z);
+      groupRef.current.rotation.set(rotX, rotY, rotZ);
+      groupRef.current.scale.set(scale, scale, scale);
+    }
+
+    // 2. Adjust Lighting Intensity based on Intro Animation
+    if (ambientLightRef.current && mainLightRef.current && fillLightRef.current) {
+      const intensity = prefersReducedMotion ? 1 : (lightIntensity ?? 1);
+      
+      // Multipliers based on your original light settings
+      ambientLightRef.current.intensity = 0.5 * intensity;
+      mainLightRef.current.intensity = 2 * intensity;
+      fillLightRef.current.intensity = 0.5 * intensity;
+    }
   });
 
   return (
-    <group ref={groupRef}>
-      {/* Center without "top" forces the geometric center of the model perfectly into the middle */}
-      <Center>
-        <UniversalModel />
-      </Center>
-    </group>
+    <>
+      {/* Studio Lighting mapped to Refs */}
+      <ambientLight ref={ambientLightRef} intensity={0.5} />
+      <directionalLight ref={mainLightRef} position={[3, 5, 4]} intensity={2} />
+      <directionalLight ref={fillLightRef} position={[-3, -5, -4]} intensity={0.5} color="#9DB4C7" />
+      <Environment preset="studio" />
+
+      <group ref={groupRef}>
+        <Center>
+          <UniversalModel />
+        </Center>
+      </group>
+    </>
   );
 }
 
@@ -59,12 +78,6 @@ export default function PendantScene({ scrollTransformRef }) {
         pointerEvents: 'none',
       }}
     >
-      {/* Basic Studio Lighting */}
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[3, 5, 4]} intensity={2} />
-      <directionalLight position={[-3, -5, -4]} intensity={0.5} color="#9DB4C7" />
-      <Environment preset="studio" />
-
       <Suspense fallback={null}>
         <AnimatedStage scrollTransformRef={scrollTransformRef} />
       </Suspense>

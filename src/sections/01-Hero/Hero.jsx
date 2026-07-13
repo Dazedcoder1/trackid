@@ -1,7 +1,10 @@
-import { useRef, useEffect, useCallback } from 'react';
+// src/sections/01-Hero/Hero.jsx
+import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import PendantScene from './PendantScene';
+import IntroCurtain from '../../components/IntroCurtain';
+import { useIntroSequence } from './useIntroSequence';
 import SoundToggle from '../../components/SoundToggle';
 import { COPY } from '../../content/copy';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
@@ -10,7 +13,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 const PIN_DISTANCE_VH = 550;
 
-// Phase timings (0 to 1 scroll progress)
 const PHASES = {
   scrollCue:    { start: 0.00, end: 0.04 },
   wordmark:     { start: 0.02, end: 0.15 },
@@ -29,7 +31,6 @@ function phaseDuration(phase) {
 export default function Hero() {
   const prefersReducedMotion = useReducedMotion();
 
-  // DOM Refs
   const wrapperRef   = useRef(null);
   const sectionRef   = useRef(null);
   const wordmarkRef  = useRef(null);
@@ -38,19 +39,43 @@ export default function Hero() {
   const panelRef     = useRef(null);
   const panel2Ref    = useRef(null);
 
-  // 3D Transform State (Driven by GSAP, read by R3F)
-  const scrollTransformRef = useRef({ 
-    x: 0, 
-    y: 1.5, // 👈 Model starting height
-    z: 0, 
-    rotX: 0.2, // Adds a slight initial tilt
-    rotY: 0, 
-    rotZ: 0, 
-    scale: 1 
+  // Intro-only refs
+  const curtainRef       = useRef(null);
+  const cornerTagRef     = useRef(null);
+  const cornerStatusRef  = useRef(null);
+  const cornerCollectionRef = useRef(null);
+  const cornerFeatureRef    = useRef(null);
+  const smokeVideoRef = useRef(null);
+  const loaderRef     = useRef(null);
+
+  const scrollTransformRef = useRef({
+    x: 0,
+    y: 1.5,
+    z: 0,
+    rotX: 0.2,
+    rotY: 0,
+    rotZ: 0,
+    scale: 1,
+    lightIntensity: 1,
+  });
+
+  const introActive = useIntroSequence({
+    scrollTransformRef,
+    curtainRef,
+    smokeVideoRef,
+    loaderRef,
+    cornerTagRef,
+    cornerCollectionRef,
+    cornerFeatureRef,
+    cornerStatusRef,
+    wordmarkRef,
+    taglineRef,
+    prefersReducedMotion,
   });
 
   useEffect(() => {
     if (prefersReducedMotion) return;
+    if (introActive) return;
 
     const wrapper = wrapperRef.current;
     const section = sectionRef.current;
@@ -58,46 +83,25 @@ export default function Hero() {
 
     const tl = gsap.timeline();
 
-    // 1. Text Departure
     tl.to(scrollCueRef.current, { opacity: 0, y: 12, ease: 'power2.in', duration: phaseDuration(PHASES.scrollCue) }, PHASES.scrollCue.start);
     tl.to(wordmarkRef.current, { opacity: 0, y: -20, ease: 'power2.inOut', duration: phaseDuration(PHASES.wordmark) }, PHASES.wordmark.start);
     tl.to(taglineRef.current, { opacity: 0, y: -16, ease: 'power2.inOut', duration: phaseDuration(PHASES.tagline) }, PHASES.tagline.start);
 
-    // 2. Monolith Move 1 (Fly to Left, scale up gently)
     tl.to(
       scrollTransformRef.current,
-      {
-        x: -1.2,             
-        y: -0.2,             
-        rotY: Math.PI / 6,   
-        rotX: 0.1,
-        scale: 1.5,          
-        ease: 'power2.inOut',
-        duration: phaseDuration(PHASES.pendantMove1),
-      },
+      { x: -1.2, y: -0.2, rotY: Math.PI / 6, rotX: 0.1, scale: 1.5, ease: 'power2.inOut', duration: phaseDuration(PHASES.pendantMove1) },
       PHASES.pendantMove1.start
     );
 
-    // 3. Panel 1 Enter & Exit
     tl.fromTo(panelRef.current, { opacity: 0, x: 30 }, { opacity: 1, x: 0, ease: 'power2.out', duration: phaseDuration(PHASES.panel1) }, PHASES.panel1.start);
     tl.to(panelRef.current, { opacity: 0, x: 30, ease: 'power2.inOut', duration: phaseDuration(PHASES.panel1Exit) }, PHASES.panel1Exit.start);
 
-    // 4. Monolith Move 2 (Fly to Right, scale closer)
     tl.to(
       scrollTransformRef.current,
-      {
-        x: 1.4,              
-        y: 0.2,              
-        rotY: -Math.PI / 4,  
-        rotX: -0.1,
-        scale: 2.5,          
-        ease: 'power2.inOut',
-        duration: phaseDuration(PHASES.pendantMove2),
-      },
+      { x: 1.4, y: 0.2, rotY: -Math.PI / 4, rotX: -0.1, scale: 2.5, ease: 'power2.inOut', duration: phaseDuration(PHASES.pendantMove2) },
       PHASES.pendantMove2.start
     );
 
-    // 5. Panel 2 Enter
     tl.fromTo(panel2Ref.current, { opacity: 0, x: -30 }, { opacity: 1, x: 0, ease: 'power2.out', duration: phaseDuration(PHASES.panel2) }, PHASES.panel2.start);
 
     const scrollTrigger = ScrollTrigger.create({
@@ -113,19 +117,33 @@ export default function Hero() {
       scrollTrigger.kill();
       tl.kill();
     };
-  }, [prefersReducedMotion]);
+  }, [prefersReducedMotion, introActive]);
 
   const { showcase, showcaseSecondary } = COPY.hero;
 
   return (
     <div ref={wrapperRef} style={{ height: `${PIN_DISTANCE_VH}vh` }}>
-      {/* 🔴 APPLIED OBERMANN MESH BACKGROUND HERE */}
       <section ref={sectionRef} id="hero" className="relative w-full h-screen overflow-hidden bg-obermann-mesh">
-        
-        {/* The 3D Scene */}
-        <div className="absolute inset-0">
+
+        {/* The 3D Scene — elevated above the curtain (z-50) only during intro */}
+        <div className={`absolute inset-0 ${introActive ? 'z-[55]' : ''}`}>
           <PendantScene scrollTransformRef={scrollTransformRef} />
         </div>
+
+        {/* Curtain — hides text/panels until intro hands off. Smoke video
+            and both corner text blocks now live INSIDE this component so
+            they all move together when the curtain slides up. */}
+        {introActive && (
+          <IntroCurtain
+            ref={curtainRef}
+            smokeVideoRef={smokeVideoRef}
+            loaderRef={loaderRef}
+            cornerTagRef={cornerTagRef}
+            cornerCollectionRef={cornerCollectionRef}
+            cornerFeatureRef={cornerFeatureRef}
+            cornerStatusRef={cornerStatusRef}
+          />
+        )}
 
         {/* HTML UI OVERLAYS */}
         <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-between py-12 md:py-16">
@@ -134,18 +152,23 @@ export default function Hero() {
           </div>
 
           <div className="flex flex-col items-center text-center">
-            {/* 🔴 UPDATED TO PURE WHITE, BOLD GEOMETRIC SANS */}
-            <h1 ref={wordmarkRef} className="font-display text-6xl md:text-8xl font-bold text-white mb-4 tracking-tight drop-shadow-2xl">
+            <h1
+              ref={wordmarkRef}
+              style={{ opacity: prefersReducedMotion ? 1 : 0 }}
+              className="font-display text-6xl md:text-8xl font-bold text-white mb-4 tracking-tight drop-shadow-2xl"
+            >
               {COPY.hero.wordmark}
             </h1>
-            {/* 🔴 UPDATED TO SLATE FOR HIGH CONTRAST */}
-            <p ref={taglineRef} className="font-body text-base md:text-lg text-slate max-w-md mx-auto drop-shadow-md px-6">
+            <p
+              ref={taglineRef}
+              style={{ opacity: prefersReducedMotion ? 1 : 0 }}
+              className="font-body text-base md:text-lg text-slate max-w-md mx-auto drop-shadow-md px-6"
+            >
               {COPY.hero.tagline}
             </p>
           </div>
 
           <div ref={scrollCueRef} className="flex flex-col items-center gap-3">
-            {/* 🔴 APPLIED AGENCY "KICKER" TRACKING */}
             <span className="font-mono text-[10px] uppercase tracking-kicker text-slate font-semibold">
               {COPY.hero.scrollCue}
             </span>
