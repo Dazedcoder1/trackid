@@ -1,17 +1,15 @@
-/** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
       colors: {
-        // Obermann Authentic Dark Theme
-        ink:        '#FFFFFF',   // Swapped: Ink is now pure white for text
-        parchment:  '#050205',   // Swapped: Parchment is now void black for backgrounds
-        stone:      '#130611',   // Deep plum for cards and surfaces
-        slate:      '#A1A1AA',   // Muted silver for descriptions
-        accent:     '#FFFFFF',   // Pure white for major action items
-        accentDeep: '#280E25',   // Deep plum accent
-        gold:       '#C9A66B',   // Retained if needed for jewelry accents
+        ink:        '#FFFFFF',   // Pure white for major typography
+        parchment:  '#050205',   // The Void (Deep true black for main background)
+        stone:      '#130611',   // Deep plum fallback for solid surfaces
+        slate:      '#A1A1AA',   // Muted silver for body paragraphs
+        accent:     '#FFFFFF',   // Pure white for icons/action points
+        accentDeep: '#A81C4B',   // The Deep Premium Pink for ambient glowing
+        gold:       '#C9A66B',   // Retained for metallic jewelry accents
         safe:       '#34D399',   
         alert:      '#F87171',   
       },

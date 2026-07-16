@@ -5,8 +5,25 @@
 /* stylelint-enable at-rule-no-unknown */
 
 /* ==========================================================
-   TRAKID GLOBAL STYLES
+   TRAKID GLOBAL STYLES & GLASSMORPHISM SYSTEM
 ========================================================== */
+
+@layer components {
+  /* The core cinematic glass panel */
+  .glass-card {
+    @apply bg-white/[0.04] border border-white/10 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.4)];
+  }
+  
+  /* Smooth hover elevation for cards */
+  .glass-card-hover {
+    @apply transition-all duration-500 hover:bg-white/[0.07] hover:border-white/20 hover:shadow-[0_16px_48px_rgba(201,166,107,0.08)];
+  }
+
+  /* Frosty dark backgrounds for icons inside cards */
+  .glass-icon {
+    @apply flex items-center justify-center rounded-full bg-white/10 border border-white/10 backdrop-blur-md shadow-inner;
+  }
+}
 
 /* Hide native scrollbar — Lenis smooth-scroll handles the UX */
 html {
@@ -16,9 +33,7 @@ html::-webkit-scrollbar {
   display: none;                    /* Chrome / Safari / Edge */
 }
 
-/* The ONE custom CSS rule in the entire project — the signature
-   teardrop divider copied from the design reference.
-*/
+/* Teardrop divider */
 .divider-teardrop {
   display: flex;
   align-items: center;
@@ -49,14 +64,11 @@ html::-webkit-scrollbar {
 }
 
 
-/* Hero Pendant */
-
+/* Hero Pendant & Exploded Scene Elements */
 .hero-pendant {
   will-change: transform, opacity;
   pointer-events: none;
 }
-
-/* Exploded Scene */
 
 .exploded-view {
   opacity: 0;
@@ -64,15 +76,11 @@ html::-webkit-scrollbar {
   inset: 0;
 }
 
-/* Individual exploded parts */
-
 .exploded-part {
   transform: translate(-50%, -50%);
   will-change: transform, opacity;
   pointer-events: none;
 }
-
-/* Labels */
 
 .annotation {
   color: #ffffff;
@@ -83,8 +91,6 @@ html::-webkit-scrollbar {
   opacity: 0;
   user-select: none;
 }
-
-/* Connector */
 
 .connector {
   display: flex;
@@ -109,14 +115,10 @@ html::-webkit-scrollbar {
   transform: scaleX(0);
 }
 
-/* Optional subtle glow */
-
 .connector-dot,
 .connector-line {
   box-shadow: 0 0 10px rgba(56, 189, 248, 0.45);
 }
-
-/* Performance */
 
 .hero-pendant,
 .exploded-part,
@@ -124,12 +126,10 @@ html::-webkit-scrollbar {
 .connector-dot,
 .annotation {
   backface-visibility: hidden;
-  transform-style: preserve-3d;}
-/* Reduced motion respect — CSS-level safety net.
-   JS-level checks via useReducedMotion() are the primary mechanism,
-   but this catches any raw CSS animations that slip through. */
+  transform-style: preserve-3d;
+}
 
-/* Mist drift animations — IntroCurtain */
+/* Reduced motion respect */
 @keyframes mistDrift1 {
   0%   { transform: translate(0%, 0%) scale(1); }
   100% { transform: translate(8%, 12%) scale(1.1); }
@@ -150,10 +150,11 @@ html::-webkit-scrollbar {
   100% { transform: translate(-6%, 8%) scale(1.05); }
 }
 
-
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
 }
+
+/** @type {import('tailwindcss').Config} */

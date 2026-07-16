@@ -2,7 +2,7 @@ import { memo } from 'react';
 
 function ShowroomAtmosphere() {
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true" style={{ backgroundColor: '#050103' }}>
+    <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true" style={{ backgroundColor: 'transparent' }}>
       
       {/* 
         LAYER 1: Ambient Background Glow 

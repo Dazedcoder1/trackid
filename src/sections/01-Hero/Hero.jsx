@@ -123,7 +123,7 @@ export default function Hero() {
 
   return (
     <div ref={wrapperRef} style={{ height: `${PIN_DISTANCE_VH}vh` }}>
-      <section ref={sectionRef} id="hero" className="relative w-full h-screen overflow-hidden bg-obermann-mesh">
+      <section ref={sectionRef} id="hero" className="relative w-full h-screen overflow-hidden" style={{ background: 'radial-gradient(ellipse 80% 70% at 50% 40%, #2a1122 0%, #14070e 40%, #050205 100%)' }}>
 
         {/* The 3D Scene — elevated above the curtain (z-50) only during intro */}
         <div className={`absolute inset-0 ${introActive ? 'z-[55]' : ''}`}>
@@ -146,31 +146,32 @@ export default function Hero() {
         )}
 
         {/* HTML UI OVERLAYS */}
-        <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center gap-8 py-12 md:py-16">
-          <div />
-
-          <div className="flex flex-col items-center text-center">
+        <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-end pb-8 md:pb-12">
+          {/* Main copy block — positioned at ~55% from top to sit below pendant */}
+          <div className="flex flex-col items-center text-center mb-auto" style={{ marginTop: '52vh' }}>
             <h1
               ref={wordmarkRef}
               style={{ opacity: prefersReducedMotion ? 1 : 0 }}
-              className="font-display text-6xl md:text-8xl font-bold text-white mb-4 tracking-tight drop-shadow-2xl"
+              className="font-display text-6xl md:text-8xl font-bold text-white mb-5 tracking-tight drop-shadow-2xl"
             >
               {COPY.hero.wordmark}
             </h1>
             <p
               ref={taglineRef}
               style={{ opacity: prefersReducedMotion ? 1 : 0 }}
-              className="font-body text-base md:text-lg text-slate max-w-md mx-auto drop-shadow-md px-6"
+              className="font-body text-base md:text-lg text-slate/90 max-w-md mx-auto drop-shadow-md px-6 leading-relaxed"
             >
-              {COPY.hero.tagline}
+              Beautiful enough to wear.<br />
+              Smart enough to never lose.
             </p>
           </div>
 
+          {/* Scroll cue — anchored at bottom */}
           <div ref={scrollCueRef} className="flex flex-col items-center gap-3">
-            <span className="font-mono text-[10px] uppercase tracking-kicker text-slate font-semibold">
+            <span className="font-mono text-[10px] uppercase tracking-kicker text-slate/70 font-semibold">
               {COPY.hero.scrollCue}
             </span>
-            <div className="w-px h-12 bg-gradient-to-b from-white/40 to-transparent" />
+            <div className="w-px h-10 bg-gradient-to-b from-white/50 to-transparent hero-scroll-line" />
           </div>
         </div>
 

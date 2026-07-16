@@ -10,7 +10,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { TrackProvider } from './context/TrackContext';
 import Divider from './components/Divider';
 
-
 gsap.registerPlugin(ScrollTrigger);
 
 // -------------------------------------------------------------------
@@ -22,6 +21,8 @@ import Reveal from './sections/02-Reveal/Reveal';
 import Fork from './sections/03-Fork/Fork';
 import ComplianceCase from './sections/04A-ComplianceCase/ComplianceCase';
 import Anatomy from './sections/04B-Anatomy/Anatomy';
+// ADDED: The new Feature Showcase component
+import FeatureShowcase from './sections/04C-FeatureShowcase/FeatureShowcase';
 import EngineeringCredibility from './sections/05A-EngineeringCredibility/EngineeringCredibility';
 // import PeaceOfMind from './sections/05B-PeaceOfMind/PeaceOfMind';
 import InstitutionalAsk from './sections/06A-InstitutionalAsk/InstitutionalAsk';
@@ -93,6 +94,11 @@ function App() {
         {/* --- Family Track --- */}
         <Anatomy />
         {/* <Divider /> */}
+        
+        {/* ADDED: Feature Showcase specifically in the Family track */}
+        <FeatureShowcase />
+        {/* <Divider /> */}
+        
         {/* <PeaceOfMind /> */}
         {/* <Divider /> */}
         <Invitation />
@@ -101,10 +107,6 @@ function App() {
         {/* --- Shared Closing --- */}
         <Closing />
 
-        {/* ============================================================ */}
-        {/* Phase 1 infrastructure verification — removed as actual      */}
-        {/* sections are now being built and integrated above.           */}
-        {/* ============================================================ */}
       </div>
     </TrackProvider>
   );

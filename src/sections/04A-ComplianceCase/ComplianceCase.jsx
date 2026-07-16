@@ -23,7 +23,7 @@ import { COPY } from "../../content/copy";
 import { fadeUp, staggerContainer, EASE } from "../../motion/variants";
 
 // ============================================================
-// PRIMITIVES (Aceternity-inspired, hand-rolled, no new deps)
+// PRIMITIVES 
 // ============================================================
 
 function FloatPendant({ children, reducedMotion }) {
@@ -50,7 +50,6 @@ function AccentBar() {
   );
 }
 
-// ─── Sparkles — cheap scattered particle field, no canvas ─────────────────
 function Sparkles({ count = 18, className = "" }) {
   const particles = useMemo(
     () =>
@@ -80,7 +79,6 @@ function Sparkles({ count = 18, className = "" }) {
   );
 }
 
-// ─── Text Generate Effect — words flip in on a 3D axis, staggered ─────────
 function TextGenerate({ text, className = "" }) {
   const words = text.split(" ");
   return (
@@ -102,7 +100,6 @@ function TextGenerate({ text, className = "" }) {
   );
 }
 
-// ─── Moving Border Button — rotating conic-gradient border ────────────────
 function MovingBorderButton({ children, className = "", onClick }) {
   return (
     <button onClick={onClick} className={`group relative overflow-hidden rounded-full p-[1.5px] ${className}`}>
@@ -120,7 +117,6 @@ function MovingBorderButton({ children, className = "", onClick }) {
   );
 }
 
-// ─── 3D Tilt Card — cursor-driven tilt + glare, dims siblings ──────────────
 function TiltCard({ children, className = "", onHoverChange, dimmed, reducedMotion }) {
   const ref = useRef(null);
   const rotateX = useMotionValue(0);
@@ -165,15 +161,14 @@ function TiltCard({ children, className = "", onHoverChange, dimmed, reducedMoti
           style={{
             background: `radial-gradient(220px circle at ${glareX.get()}% ${glareY.get()}%, rgba(201,166,107,0.16), transparent 70%)`,
           }}
-          className="pointer-events-none absolute inset-0 rounded-3xl transition-opacity"
+          className="pointer-events-none absolute inset-0 rounded-3xl transition-opacity z-0"
         />
       )}
-      {children}
+      <div className="relative z-10 h-full">{children}</div>
     </motion.div>
   );
 }
 
-// ─── Scramble / decode text — random glyphs lock into place left→right ─────
 const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#%&$@*+=-";
 
 function ScrambleText({ text, className = "", trigger = true, speed = 30 }) {
@@ -215,7 +210,6 @@ function ScrambleText({ text, className = "", trigger = true, speed = 30 }) {
   return <span className={`font-mono tabular-nums ${className}`}>{display}</span>;
 }
 
-// ─── True magnetic button — cursor-distance pull, spring return ───────────
 function MagneticButton({ children, className = "", radius = 90, strength = 0.4 }) {
   const ref = useRef(null);
   const x = useMotionValue(0);
@@ -262,7 +256,6 @@ function MagneticButton({ children, className = "", radius = 90, strength = 0.4 
   );
 }
 
-// ─── Infinite marquee — duplicated track, pure CSS loop ────────────────────
 function Marquee({ items, reverse = false, className = "" }) {
   const track = [...items, ...items];
   return (
@@ -283,7 +276,6 @@ function Marquee({ items, reverse = false, className = "" }) {
   );
 }
 
-// ─── Radar Pulse — expanding ring "signal" pulses, on-theme for a GPS tracker ─
 function RadarPulse({ tone = "gold", size = 340, ringCount = 3, reducedMotion }) {
   const toneClass =
     tone === "alert" ? "border-alert/50" : tone === "safe" ? "border-safe/50" : "border-gold/50";
@@ -303,7 +295,6 @@ function RadarPulse({ tone = "gold", size = 340, ringCount = 3, reducedMotion })
   );
 }
 
-// ─── 3D Tilt wrapper driven by external normalized mouse coords (-0.5 → 0.5) ─
 function MouseTilt({ children, mouseX, mouseY, intensity = 14, className = "" }) {
   return (
     <motion.div
@@ -316,7 +307,7 @@ function MouseTilt({ children, mouseX, mouseY, intensity = 14, className = "" })
     </motion.div>
   );
 }
-// ─── Card Carousel — infinite looping row, pauses on hover, edge-fades ────
+
 function CardCarousel({ cards, hoveredCard, setHoveredCard, reducedMotion }) {
   const [paused, setPaused] = useState(false);
   const track = [...cards, ...cards];
@@ -346,11 +337,10 @@ function CardCarousel({ cards, hoveredCard, setHoveredCard, reducedMotion }) {
               reducedMotion={reducedMotion}
               dimmed={hoveredCard !== null && hoveredCard !== idx}
               onHoverChange={(isHovering) => setHoveredCard(isHovering ? idx : null)}
-              className="group overflow-hidden rounded-3xl border border-stone bg-white/80 p-8 backdrop-blur-xl shadow-sm transition-shadow duration-300 hover:shadow-xl hover:border-gold/30"
+              className="group overflow-hidden rounded-3xl p-8 glass-card glass-card-hover"
             >
-              <div className="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-gold/10 blur-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none" />
               <AccentBar />
-              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-gold/25 bg-parchment text-xl">
+              <div className="mb-6 h-12 w-12 text-xl glass-icon">
                 {icons[card.title] ?? "✦"}
               </div>
               <h4 className="font-display text-2xl text-ink">{card.title}</h4>
@@ -370,7 +360,6 @@ function CardCarousel({ cards, hoveredCard, setHoveredCard, reducedMotion }) {
   );
 }
 
-// ─── Pendant Illustration — hand-drawn SVG, gold gradient teardrop + facet ─
 function PendantIllustration({ size = 200, className = "" }) {
   return (
     <svg
@@ -397,7 +386,6 @@ function PendantIllustration({ size = 200, className = "" }) {
         </radialGradient>
       </defs>
 
-      {/* Chain */}
       <path
         d="M60 8 C 60 30, 140 30, 140 8"
         fill="none"
@@ -405,38 +393,21 @@ function PendantIllustration({ size = 200, className = "" }) {
         strokeWidth="3"
         strokeLinecap="round"
       />
-      {/* Bail (loop connecting chain to pendant) */}
       <rect x="90" y="26" width="20" height="24" rx="9" fill="none" stroke="url(#pendantGoldEdge)" strokeWidth="4" />
-
-      {/* Teardrop body */}
       <path
-        d="M100 48
-           C 138 78, 158 118, 158 152
-           C 158 190, 132 214, 100 214
-           C 68 214, 42 190, 42 152
-           C 42 118, 62 78, 100 48 Z"
+        d="M100 48 C 138 78, 158 118, 158 152 C 158 190, 132 214, 100 214 C 68 214, 42 190, 42 152 C 42 118, 62 78, 100 48 Z"
         fill="url(#pendantGold)"
         stroke="#A9834A"
         strokeWidth="1.5"
       />
-
-      {/* Inner faceted stone */}
       <path
-        d="M100 74
-           C 124 96, 138 122, 138 150
-           C 138 176, 121 194, 100 194
-           C 79 194, 62 176, 62 150
-           C 62 122, 76 96, 100 74 Z"
+        d="M100 74 C 124 96, 138 122, 138 150 C 138 176, 121 194, 100 194 C 79 194, 62 176, 62 150 C 62 122, 76 96, 100 74 Z"
         fill="url(#stoneGlow)"
         opacity="0.9"
       />
-
-      {/* Facet lines */}
       <path d="M100 74 L100 194" stroke="#FFFFFF" strokeOpacity="0.35" strokeWidth="1.2" />
       <path d="M100 108 L62 150" stroke="#FFFFFF" strokeOpacity="0.25" strokeWidth="1" />
       <path d="M100 108 L138 150" stroke="#FFFFFF" strokeOpacity="0.25" strokeWidth="1" />
-
-      {/* Catch-light highlight */}
       <ellipse cx="80" cy="108" rx="12" ry="20" fill="#FFFFFF" opacity="0.55" />
     </svg>
   );
@@ -451,7 +422,6 @@ export default function ComplianceCase() {
   const [journeyMouse, setJourneyMouse] = useState({ x: 0, y: 0 });
   const [assemblyMouse, setAssemblyMouse] = useState({ x: 0, y: 0 });
 
-  // Scroll progress for the Compliance Journey traveling indicator
   const journeyRef = useRef(null);
   const { scrollYProgress: journeyProgress } = useScroll({
     target: journeyRef,
@@ -466,7 +436,6 @@ export default function ComplianceCase() {
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start end", "end start"] });
   const glowY = useTransform(scrollYProgress, [0, 1], reducedMotion ? [0, 0] : [40, -40]);
 
-  // ---------- Pinned assembly sequence (scroll-scrubbed) ----------
   const assemblyRef = useRef(null);
   const { scrollYProgress: assemblyProgress } = useScroll({
     target: assemblyRef,
@@ -489,7 +458,6 @@ export default function ComplianceCase() {
   const statementClip = useTransform(assemblyProgress, [0.5, 0.64], ["inset(0 100% 0 0)", "inset(0 0% 0 0)"]);
   const statementOpacity = useTransform(assemblyProgress, [0.48, 0.54], [0, 1]);
 
-  // ---------- Horizontal scroll gallery ----------
   const galleryRef = useRef(null);
   const { scrollYProgress: galleryProgress } = useScroll({
     target: galleryRef,
@@ -527,24 +495,21 @@ export default function ComplianceCase() {
 
   return (
     <SectionWrapper id="compliance-case"  className="pt-12 pb-24">
-      {/* Animated Background */}
+      {/* Animated Deep Pink Background Glows */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          animate={{ scale: [1, 1.15, 1], opacity: [0.18, 0.3, 0.18] }}
+          animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }}
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -left-52 top-20 h-[650px] w-[650px] rounded-full bg-gold/10 blur-[180px]"
+          className="absolute -left-52 top-20 h-[650px] w-[650px] rounded-full bg-accentDeep/20 blur-[180px]"
         />
         <motion.div
-          animate={{ x: [-60, 60, -60], y: [0, 40, 0] }}
+          animate={{ x: [-60, 60, -60], y: [0, 40, 0], opacity: [0.2, 0.4, 0.2] }}
           transition={{ duration: 24, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute right-0 bottom-0 h-[500px] w-[500px] rounded-full bg-accent/5 blur-[160px]"
+          className="absolute right-0 bottom-0 h-[500px] w-[500px] rounded-full bg-accentDeep/20 blur-[160px]"
         />
       </div>
-       {/* ================================================================
-          🔥 CINEMATIC SECTION — pinned assembly + marquee + horizontal gallery
-      ================================================================ */}
+
       <div className="relative mt-36 -mx-6 lg:-mx-20">
-        {/* A) Pinned assembly sequence */}
         <div ref={assemblyRef} className="relative h-[700vh]">
           <div
             className="sticky top-0 h-screen overflow-hidden flex items-center justify-center"
@@ -556,14 +521,13 @@ export default function ComplianceCase() {
               });
             }}
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-ink via-ink/95 to-ink" />
+            <div className="absolute inset-0 bg-gradient-to-b from-parchment via-parchment/95 to-parchment" />
 
-            {/* Diagonal light sweep — a moving studio light instead of a flat backdrop */}
             {!reducedMotion && (
               <motion.div
                 animate={{ x: ["-30%", "130%"] }}
                 transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", repeatDelay: 1.5 }}
-                className="absolute top-0 h-full w-1/3 rotate-12 bg-gradient-to-r from-transparent via-gold/[0.06] to-transparent pointer-events-none"
+                className="absolute top-0 h-full w-1/3 rotate-12 bg-gradient-to-r from-transparent via-accentDeep/10 to-transparent pointer-events-none"
               />
             )}
 
@@ -586,7 +550,6 @@ export default function ComplianceCase() {
               className="absolute h-[650px] w-[650px] rounded-full border border-dashed border-gold/10"
             />
 
-            {/* Phase 1: wordmark slam */}
             <motion.div
               style={{ opacity: wordmarkOpacity, scale: wordmarkScale }}
               className="absolute flex items-center font-display text-7xl md:text-9xl tracking-tight"
@@ -597,7 +560,6 @@ export default function ComplianceCase() {
                 style={{ transformPerspective: 1000 }}
                 className="relative flex items-center"
               >
-                {/* Soft glow duplicate behind the text so it breathes even before scroll/hover */}
                 <div className="absolute inset-0 flex items-center blur-2xl opacity-40 text-gold select-none" aria-hidden="true">
                   TRAKID
                 </div>
@@ -606,7 +568,7 @@ export default function ComplianceCase() {
                   style={{ x: trakX }}
                   animate={reducedMotion ? {} : { y: [0, -6, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  className="relative inline-block text-parchment"
+                  className="relative inline-block text-ink"
                 >
                   TRAK
                 </motion.span>
@@ -621,38 +583,36 @@ export default function ComplianceCase() {
               </motion.div>
             </motion.div>
 
-            {/* Phase 2: parts assembling into a pendant */}
             <motion.div style={{ opacity: partsOpacity }} className="absolute">
               <motion.div
                 style={{ scale: ringScale, rotate: partsRotate }}
-                className="relative h-72 w-72 rounded-full border border-gold/25 bg-white/5 backdrop-blur-xl flex items-center justify-center"
+                className="relative h-72 w-72 rounded-full glass-card flex items-center justify-center"
               >
                 <div className="absolute inset-6 rounded-full border border-gold/15" />
                 <Gem size={56} strokeWidth={1.3} className="text-gold" />
 
-                <motion.div style={{ x: partTL }} className="absolute -left-16 -top-10 flex h-16 w-16 items-center justify-center rounded-2xl border border-gold/20 bg-white/10 backdrop-blur-md">
-                  <Shield size={22} className="text-parchment" />
+                <motion.div style={{ x: partTL }} className="absolute -left-16 -top-10 h-16 w-16 glass-icon">
+                  <Shield size={22} className="text-ink" />
                 </motion.div>
-                <motion.div style={{ x: partTR }} className="absolute -right-16 -top-10 flex h-16 w-16 items-center justify-center rounded-2xl border border-gold/20 bg-white/10 backdrop-blur-md">
-                  <Zap size={22} className="text-parchment" />
+                <motion.div style={{ x: partTR }} className="absolute -right-16 -top-10 h-16 w-16 glass-icon">
+                  <Zap size={22} className="text-ink" />
                 </motion.div>
-                <motion.div style={{ x: partBL }} className="absolute -left-16 -bottom-10 flex h-16 w-16 items-center justify-center rounded-2xl border border-gold/20 bg-white/10 backdrop-blur-md">
-                  <Link2 size={22} className="text-parchment" />
+                <motion.div style={{ x: partBL }} className="absolute -left-16 -bottom-10 h-16 w-16 glass-icon">
+                  <Link2 size={22} className="text-ink" />
                 </motion.div>
-                <motion.div style={{ x: partBR }} className="absolute -right-16 -bottom-10 flex h-16 w-16 items-center justify-center rounded-2xl border border-gold/20 bg-white/10 backdrop-blur-md">
-                  <Gem size={22} className="text-parchment" />
+                <motion.div style={{ x: partBR }} className="absolute -right-16 -bottom-10 h-16 w-16 glass-icon">
+                  <Gem size={22} className="text-ink" />
                 </motion.div>
               </motion.div>
             </motion.div>
 
-            {/* Phase 3: statement mask reveal */}
             <motion.div style={{ opacity: statementOpacity }} className="absolute px-6 max-w-4xl text-center">
               <p className="font-mono text-xs uppercase tracking-[0.5em] text-gold/70 mb-6">
                 Assembled for one job
               </p>
               <motion.h3
                 style={{ clipPath: statementClip }}
-                className="font-display text-4xl md:text-6xl leading-tight text-parchment"
+                className="font-display text-4xl md:text-6xl leading-tight text-ink"
               >
                 Every part exists so a child forgets it's even there.
               </motion.h3>
@@ -660,13 +620,11 @@ export default function ComplianceCase() {
           </div>
         </div>
 
-        {/* B) Marquee strip */}
-        <div className="border-y border-stone bg-parchment py-8">
+        <div className="border-y border-white/10 bg-white/5 py-8">
           <Marquee items={["ALWAYS WORN", "NEVER REMOVED", "TRAKID", "QUIETLY PROTECTED"]} />
         </div>
 
-        {/* C) Horizontal scroll gallery */}
-        <div ref={galleryRef} className="relative h-[350vh] bg-parchment">
+        <div ref={galleryRef} className="relative h-[350vh] bg-transparent">
           <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center">
             <div className="mb-10 px-6 lg:px-20">
               <p className="font-mono text-xs uppercase tracking-[0.4em] text-accent">Engineered Detail</p>
@@ -677,22 +635,21 @@ export default function ComplianceCase() {
 
             <motion.div style={{ x: galleryX }} className="flex gap-8 px-6 lg:px-20 will-change-transform">
               {panels.map((panel, i) => {
-                
                 return (
                   <div
                     key={panel.title}
-                    className="relative flex-shrink-0 w-[82vw] md:w-[38vw] lg:w-[26vw] aspect-[4/5] rounded-[2.5rem] border border-stone bg-white/80 backdrop-blur-xl shadow-xl p-10 flex flex-col justify-between overflow-hidden"
+                    className="relative flex-shrink-0 w-[82vw] md:w-[38vw] lg:w-[26vw] aspect-[4/5] rounded-[2.5rem] glass-card p-10 flex flex-col justify-between overflow-hidden group"
                   >
-                    <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gold/10 blur-3xl" />
-                    <span className="font-mono text-xs text-gold/70">0{i + 1}</span>
-                    <div>
-                      <div className="mb-8 overflow-hidden rounded-2xl">
-  <img
-    src={panel.image}
-    alt={panel.title}
-    className="h-56 w-full object-contain"
-  />
-</div>
+                    <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accentDeep/20 blur-3xl transition-opacity duration-500 opacity-0 group-hover:opacity-100" />
+                    <span className="font-mono text-xs text-gold/70 relative z-10">0{i + 1}</span>
+                    <div className="relative z-10">
+                      <div className="mb-8 overflow-hidden rounded-2xl glass-card border-none bg-white/[0.02]">
+                        <img
+                          src={panel.image}
+                          alt={panel.title}
+                          className="h-56 w-full object-contain"
+                        />
+                      </div>
                       <h4 className="font-display text-2xl text-ink">{panel.title}</h4>
                       <p className="mt-3 text-sm leading-6 text-slate">{panel.desc}</p>
                     </div>
@@ -703,9 +660,8 @@ export default function ComplianceCase() {
           </div>
         </div>
 
-        {/* D) Closing — scramble stat + magnetic CTA */}
         <div className="relative py-20 px-6 text-center overflow-hidden">
-          <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/8 blur-[160px] pointer-events-none" />
+          <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accentDeep/20 blur-[160px] pointer-events-none" />
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -721,7 +677,7 @@ export default function ComplianceCase() {
               Not a feature. An outcome — measured across a full pilot cohort.
             </p>
             <div className="mt-12 flex justify-center">
-              <MagneticButton className="bg-ink text-parchment shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
+              <MagneticButton className="bg-ink text-parchment shadow-[0_20px_60px_rgba(255,255,255,0.15)]">
                 Get TrakID
               </MagneticButton>
             </div>
@@ -729,14 +685,12 @@ export default function ComplianceCase() {
         </div>
       </div>
 
-
-
       {/* ================================================================
-          HERO — headline + pendant timeline
+          HERO — headline + standalone pendant showcase
       ================================================================ */}
       <div
         ref={heroRef}
-        className="relative mt-20"
+        className="relative mt-24 mb-32"
         onMouseMove={(e) => {
           const rect = e.currentTarget.getBoundingClientRect();
           const x = (e.clientX - rect.left) / rect.width - 0.5;
@@ -744,14 +698,15 @@ export default function ComplianceCase() {
           setMouse({ x, y });
         }}
       >
+        {/* Ambient Hero Glows - Centered */}
         <motion.div
           style={{ y: glowY }}
-          className="pointer-events-none absolute -right-32 -top-20 h-[520px] w-[520px] rounded-full bg-gold/8 blur-[160px]"
+          className="pointer-events-none absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-accentDeep/20 blur-[160px]"
         />
         <motion.div
           animate={{ x: mouse.x * 120, y: mouse.y * 120 }}
           transition={{ type: "spring", stiffness: 45, damping: 18 }}
-          className="pointer-events-none absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/10 blur-[170px]"
+          className="pointer-events-none absolute left-1/2 top-1/4 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accentDeep/20 blur-[170px]"
         />
 
         <motion.div
@@ -759,36 +714,38 @@ export default function ComplianceCase() {
           initial="initial"
           whileInView="whileInView"
           viewport={{ once: true, margin: "-80px" }}
-          className="relative grid gap-20 lg:grid-cols-[1fr_600px] items-center"
+          className="relative flex flex-col items-center justify-center text-center gap-20"
         >
-          <motion.div variants={fadeUp} className="relative z-10">
+          {/* TEXT BLOCK - Center Aligned */}
+          <motion.div variants={fadeUp} className="relative z-10 flex flex-col items-center px-4 w-full">
             <p className="font-mono uppercase tracking-[0.45em] text-accent text-xs">{data.eyebrow}</p>
 
-            <div className="relative mt-6 max-w-xl">
-              <Sparkles count={16} className="-inset-x-6 -top-6 h-[140%]" />
-              <h2 className="relative font-display text-5xl md:text-7xl xl:text-[82px] leading-[0.93] tracking-tight text-ink">
+            <div className="relative mt-6 max-w-4xl mx-auto">
+              <Sparkles count={18} className="-inset-x-12 -top-12 h-[160%] w-[120%]" />
+              <h2 className="relative font-display text-5xl md:text-7xl xl:text-[82px] leading-[1.05] tracking-tight text-ink mx-auto text-balance">
                 <TextGenerate text={data.headline} />
               </h2>
             </div>
 
-            <p className="mt-8 max-w-md text-lg leading-8 text-slate">{data.body}</p>
+            <p className="mt-8 max-w-2xl text-lg leading-8 text-slate mx-auto text-balance">{data.body}</p>
 
-            <div className="mt-12 flex flex-wrap gap-4">
+            <div className="mt-12 flex flex-wrap justify-center gap-4">
               <MovingBorderButton>Explore Solution</MovingBorderButton>
-              <button className="rounded-full border border-ink/30 text-ink px-8 py-3.5 text-sm font-body font-medium hover:bg-ink/5 transition-colors duration-200">
+              <button className="rounded-full border border-white/20 text-ink px-8 py-3.5 text-sm font-body font-medium hover:bg-white/5 hover:border-white/40 transition-colors duration-300">
                 Learn More
               </button>
             </div>
           </motion.div>
 
-          <motion.div variants={fadeUp} className="grid grid-cols-[240px_1fr] items-start gap-8">
+          {/* PENDANT BLOCK - Standalone & Perfectly Scaled */}
+          <motion.div variants={fadeUp} className="relative w-full flex justify-center mt-4">
             <FloatPendant reducedMotion={reducedMotion}>
-              <MouseTilt mouseX={mouse.x} mouseY={mouse.y} intensity={10} className="relative">
-                <RadarPulse tone="gold" size={420} reducedMotion={reducedMotion} />
-                <div className="absolute inset-0 rounded-full bg-gold/15 blur-[80px]" />
+              <MouseTilt mouseX={mouse.x} mouseY={mouse.y} intensity={10} className="relative mx-auto">
+                <RadarPulse tone="gold" size={540} ringCount={3} reducedMotion={reducedMotion} />
+                <div className="absolute inset-0 rounded-full bg-gold/15 blur-[100px]" />
 
-                {/* Rotating conic-gradient bezel — reads as brushed metal catching light */}
-                <div className="absolute inset-[-3px] rounded-[104px] overflow-hidden">
+                {/* Rotating conic-gradient bezel */}
+                <div className="absolute inset-[-3px] rounded-[110px] overflow-hidden">
                   <motion.div
                     animate={reducedMotion ? {} : { rotate: 360 }}
                     transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
@@ -800,8 +757,8 @@ export default function ComplianceCase() {
                   />
                 </div>
 
-                <div className="relative h-[400px] rounded-[100px] border border-gold/25 bg-gradient-to-b from-white/85 to-white/60 backdrop-blur-xl shadow-[0_30px_80px_rgba(0,0,0,0.14)] flex items-center justify-center overflow-hidden">
-                  {/* Faint engraved concentric texture instead of a flat void */}
+                {/* Explicit width and height established since it no longer relies on CSS Grid columns */}
+                <div className="relative h-[460px] w-[300px] rounded-[100px] glass-card flex flex-col items-center justify-center overflow-hidden">
                   <div
                     className="absolute inset-0 opacity-[0.35]"
                     style={{
@@ -810,30 +767,28 @@ export default function ComplianceCase() {
                     }}
                   />
 
-                  {/* Diagonal shimmer sweep across the glass */}
                   {!reducedMotion && (
                     <motion.div
                       animate={{ x: ["-120%", "220%"] }}
                       transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", repeatDelay: 2.4 }}
-                      className="absolute top-0 h-full w-1/4 -skew-x-12 bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none"
+                      className="absolute top-0 h-full w-1/4 -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none"
                     />
                   )}
 
-                  {/* Orbiting feature chips */}
                   {!reducedMotion &&
                     ["GPS", "24/7", "IP68"].map((label, i) => (
                       <motion.div
                         key={label}
-                        className="absolute h-9 px-3 flex items-center justify-center rounded-full border border-gold/30 bg-parchment/95 shadow-sm font-mono text-[9px] tracking-[0.15em] text-accentDeep"
-                        style={{ top: "50%", left: "50%" }}
+                        className="absolute h-9 px-3 flex items-center justify-center rounded-full glass-card font-mono text-[9px] tracking-[0.15em] text-accent"
+                        style={{ top: "45%", left: "50%" }}
                         animate={{
                           x: [
-                            Math.cos((i * 2 * Math.PI) / 3) * 118,
-                            Math.cos((i * 2 * Math.PI) / 3 + Math.PI * 2) * 118,
+                            Math.cos((i * 2 * Math.PI) / 3) * 138,
+                            Math.cos((i * 2 * Math.PI) / 3 + Math.PI * 2) * 138,
                           ],
                           y: [
-                            Math.sin((i * 2 * Math.PI) / 3) * 150,
-                            Math.sin((i * 2 * Math.PI) / 3 + Math.PI * 2) * 150,
+                            Math.sin((i * 2 * Math.PI) / 3) * 170,
+                            Math.sin((i * 2 * Math.PI) / 3 + Math.PI * 2) * 170,
                           ],
                         }}
                         transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
@@ -842,119 +797,45 @@ export default function ComplianceCase() {
                       </motion.div>
                     ))}
 
-                  <div className="relative text-center px-6">
+                  <div className="relative text-center px-6 mt-4">
                     <motion.div
                       animate={reducedMotion ? {} : { rotate: [0, 3, 0, -3, 0], y: [0, -4, 0] }}
                       transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                      className="mx-auto"
+                      className="mx-auto flex justify-center"
                     >
-                      <PendantIllustration size={128} />
+                      <PendantIllustration size={140} />
                     </motion.div>
-                    <h4 className="mt-4 font-display text-xl text-ink">Classic Teardrop</h4>
-                    <p className="mt-1.5 font-mono text-[10px] tracking-[0.3em] uppercase text-accent">
+                    <h4 className="mt-8 font-display text-2xl text-ink">Classic Teardrop</h4>
+                    <p className="mt-2 font-mono text-[10px] tracking-[0.3em] uppercase text-accent">
                       14k Gold-Plated
                     </p>
                   </div>
                 </div>
               </MouseTilt>
             </FloatPendant>
-
-            <div className="relative pt-10">
-              <motion.div
-                initial={{ scaleY: 0 }}
-                whileInView={{ scaleY: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.3, ease: [0.22, 1, 0.36, 1] }}
-                style={{ originY: 0 }}
-                className="absolute left-[19px] top-14 bottom-8 w-px bg-gradient-to-b from-gold/50 via-gold/25 to-transparent"
-              />
-
-              {[
-                { title: "Acceptance", desc: "Children naturally choose to wear TrakID — it looks like a gift, not a gadget.", icon: Gem },
-                { title: "Daily Wear", desc: "Comfortable enough to forget it's there. Worn continuously, not reluctantly.", icon: Check },
-                { title: "Continuous Safety", desc: "Protection only works when it stays on. TrakID stays on.", icon: Shield },
-              ].map((item, i) => {
-                const ItemIcon = item.icon;
-                return (
-                  <motion.div
-                    key={item.title}
-                    initial={reducedMotion ? {} : { opacity: 0, x: 12 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "-60px" }}
-                    transition={{ duration: 0.5, ease: EASE, delay: i * 0.12 }}
-                    whileHover={reducedMotion ? {} : { x: 10, scale: 1.03 }}
-                    className="group relative mb-7 ml-9 overflow-hidden rounded-2xl border border-stone bg-white/90 p-6 shadow-sm transition-shadow duration-300 hover:shadow-[0_25px_60px_rgba(0,0,0,0.12)] hover:border-gold/30"
-                  >
-                    {/* Gold top hairline that grows in on hover */}
-                    <motion.div
-                      variants={{ rest: { scaleX: 0 }, hover: { scaleX: 1 } }}
-                      initial="rest"
-                      whileHover="hover"
-                      transition={{ duration: 0.4, ease: EASE }}
-                      style={{ originX: 0 }}
-                      className="absolute top-0 left-0 h-[2px] w-full bg-gradient-to-r from-gold to-transparent"
-                    />
-
-                    <div className="absolute -left-[34px] top-6 h-4 w-4">
-                      {!reducedMotion && (
-                        <motion.span
-                          animate={{ scale: [1, 2.2], opacity: [0.6, 0] }}
-                          transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut", delay: i * 0.4 }}
-                          className="absolute inset-0 rounded-full bg-gold/60"
-                        />
-                      )}
-                      <motion.div
-                        initial={{ scale: 0, opacity: 0 }}
-                        whileInView={{ scale: 1, opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: i * 0.18 + 0.5, duration: 0.4, type: "spring", stiffness: 180 }}
-                        className="relative h-4 w-4 rounded-full border-4 border-parchment bg-gold shadow-sm"
-                      />
-                    </div>
-
-                    <div className="flex items-start gap-4">
-                      <motion.div
-                        whileHover={reducedMotion ? {} : { rotate: 8, scale: 1.08 }}
-                        transition={{ duration: 0.3, ease: EASE }}
-                        className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full border border-gold/25 bg-gradient-to-b from-parchment to-white shadow-sm"
-                      >
-                        <ItemIcon size={18} strokeWidth={1.8} className="text-accent" />
-                      </motion.div>
-                      <div>
-                        <h4 className="font-display text-xl text-ink">{item.title}</h4>
-                        <p className="mt-2 text-sm leading-6 text-slate">{item.desc}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
           </motion.div>
         </motion.div>
       </div>
 
-      {/* ================================================================
-          STATISTIC CALLOUT
-      ================================================================ */}
       <motion.div
         {...fadeUp}
         initial={fadeUp.initial}
         whileInView={fadeUp.whileInView}
         viewport={fadeUp.viewport}
         transition={fadeUp.transition}
-        className="relative mt-32 overflow-hidden rounded-3xl border border-gold/20 bg-white/80 backdrop-blur-xl shadow-[0_35px_90px_rgba(0,0,0,0.12)]"
+        className="relative mt-32 overflow-hidden rounded-3xl p-8 lg:p-10 glass-card"
       >
-        <div className="absolute inset-0 rounded-3xl border border-gold/20 opacity-0 transition-opacity duration-500 hover:opacity-100" />
-        <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-gold/8 blur-[90px] pointer-events-none" />
+        <div className="absolute inset-0 rounded-3xl border border-white/20 opacity-0 transition-opacity duration-500 hover:opacity-100" />
+        <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-accentDeep/20 blur-[90px] pointer-events-none" />
 
-        <div className="relative grid items-center gap-6 p-8 lg:p-10 lg:grid-cols-[80px_200px_1fr]">
+        <div className="relative grid items-center gap-6 lg:grid-cols-[80px_200px_1fr]">
           <div className="hidden lg:flex justify-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full border border-gold/25 bg-parchment">
-              <span className="text-3xl">🛡</span>
+            <div className="h-16 w-16 text-3xl glass-icon">
+              🛡
             </div>
           </div>
 
-          <div className="lg:border-r lg:border-gold/15 lg:pr-8">
+          <div className="lg:border-r lg:border-white/10 lg:pr-8">
             <motion.p
               className="font-display text-7xl leading-none text-accent"
               onViewportEnter={() => {
@@ -976,9 +857,6 @@ export default function ComplianceCase() {
         </div>
       </motion.div>
 
-      {/* ================================================================
-          VALUE CARDS — infinite carousel, pauses on hover
-      ================================================================ */}
       <CardCarousel
         cards={data.valueCards}
         hoveredCard={hoveredCard}
@@ -986,9 +864,6 @@ export default function ComplianceCase() {
         reducedMotion={reducedMotion}
       />
 
-      {/* ================================================================
-          COMPLIANCE JOURNEY
-      ================================================================ */}
       <motion.section
         ref={journeyRef}
         variants={staggerContainer}
@@ -1017,7 +892,6 @@ export default function ComplianceCase() {
             setJourneyMouse({ x, y });
           }}
         >
-          {/* Converging signal beam — two pulses travel from the edges toward the pendant, looping */}
           {!reducedMotion && (
             <div className="pointer-events-none absolute left-0 right-0 top-1/2 hidden -translate-y-1/2 lg:block">
               <div className="absolute left-0 right-0 h-px bg-gradient-to-r from-alert/25 via-transparent to-safe/25" />
@@ -1067,8 +941,8 @@ export default function ComplianceCase() {
           <FloatPendant reducedMotion={reducedMotion}>
             <MouseTilt mouseX={journeyMouse.x} mouseY={journeyMouse.y} intensity={12} className="relative flex justify-center">
               <RadarPulse tone="gold" size={280} reducedMotion={reducedMotion} />
-              <div className="absolute h-64 w-64 rounded-full bg-gold/12 blur-[80px]" />
-              <div className="relative flex h-[380px] w-[220px] items-center justify-center rounded-[90px] border border-gold/20 bg-white/70 shadow-xl backdrop-blur-xl">
+              <div className="absolute h-64 w-64 rounded-full bg-accentDeep/20 blur-[80px]" />
+              <div className="relative flex h-[380px] w-[220px] items-center justify-center rounded-[90px] glass-card">
                 <div className="text-center">
                   <motion.div
                     animate={reducedMotion ? {} : { scale: [1, 1.05, 1], y: [0, -5, 0] }}
@@ -1116,7 +990,6 @@ export default function ComplianceCase() {
         <div className="mt-20 px-4">
           <div className="relative flex items-center justify-between">
             <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-px bg-gradient-to-r from-alert/30 via-gold/30 to-safe/50" />
-            {/* Scroll-linked traveling indicator — tracks how far you've scrolled through the section */}
             {!reducedMotion && (
               <motion.div
                 style={{ left: journeyDotLeft }}
@@ -1135,10 +1008,6 @@ export default function ComplianceCase() {
         </div>
       </motion.section>
 
-      
-      {/* ================================================================
-          BENEFITS GRID
-      ================================================================ */}
       <motion.section
         variants={staggerContainer}
         initial="initial"
@@ -1160,13 +1029,13 @@ export default function ComplianceCase() {
                 reducedMotion={reducedMotion}
                 dimmed={hoveredBenefit !== null && hoveredBenefit !== idx}
                 onHoverChange={(isHovering) => setHoveredBenefit(isHovering ? idx : null)}
-                className="group rounded-3xl border border-stone bg-white/70 p-8 backdrop-blur shadow-sm transition-shadow duration-300 hover:shadow-lg hover:border-gold/30"
+                className="group rounded-3xl p-8 glass-card glass-card-hover"
               >
                 <AccentBar />
                 <motion.div
                   whileHover={reducedMotion ? {} : { rotate: 12, scale: 1.08 }}
                   transition={{ duration: 0.3, ease: EASE }}
-                  className="mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-gold/20 bg-parchment text-lg"
+                  className="mb-6 h-12 w-12 text-lg glass-icon"
                 >
                   ✦
                 </motion.div>
@@ -1178,10 +1047,6 @@ export default function ComplianceCase() {
         </div>
       </motion.section>
 
-     
-      {/* ================================================================
-          CLOSING QUOTE
-      ================================================================ */}
       <motion.section
         {...fadeUp}
         initial={fadeUp.initial}
