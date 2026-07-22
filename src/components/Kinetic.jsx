@@ -45,10 +45,11 @@ export function KineticLine({ segments, className = '' }) {
     const words = el.querySelectorAll('.kw-inner');
     const tween = gsap.fromTo(
       words,
-      { yPercent: 120, opacity: 0 },
+      { yPercent: 120, opacity: 0, filter: 'blur(7px)' },
       {
         yPercent: 0,
         opacity: 1,
+        filter: 'blur(0px)',
         stagger: 0.1,
         ease: 'none',
         scrollTrigger: {
@@ -115,15 +116,15 @@ export function KineticParagraph({ text, accents = [], className = '' }) {
     const words = el.querySelectorAll('.kp-word');
     const tween = gsap.fromTo(
       words,
-      { opacity: 0.16 },
+      { opacity: 0.28 },
       {
         opacity: 1,
         stagger: 0.06,
         ease: 'none',
         scrollTrigger: {
           trigger: el,
-          start: 'top 82%',
-          end: 'top 38%',
+          start: 'top 90%',
+          end: 'top 48%',
           scrub: 0.6,
         },
       }

@@ -45,10 +45,10 @@ export default function TheBelief() {
 
       {/* Drifting brand orbs */}
       <div aria-hidden className="absolute top-[20%] -right-24 w-72 h-72 rounded-full bg-gold/10 blur-[100px] pointer-events-none" />
-      <div aria-hidden className="absolute bottom-[20%] -left-20 w-80 h-80 rounded-full bg-accentDeep/15 blur-[110px] pointer-events-none" />
+      <div aria-hidden className="absolute bottom-[20%] -left-20 w-80 h-80 rounded-full bg-gold/[0.07] blur-[110px] pointer-events-none" />
 
-      <div className="relative max-w-6xl mx-auto px-6 py-32 md:py-44 flex flex-col items-center text-center">
-        <ChapterMarker className="mb-16">{belief.marker}</ChapterMarker>
+      <div className="relative max-w-6xl mx-auto px-6 pt-24 md:pt-28 pb-16 md:pb-20 flex flex-col items-center text-center">
+        <ChapterMarker className="mb-12">{belief.marker}</ChapterMarker>
 
         {/* The thesis — giant, assembling with scroll */}
         <KineticLine
@@ -60,7 +60,7 @@ export default function TheBelief() {
         <KineticParagraph
           text={belief.body}
           accents={belief.bodyAccents}
-          className="font-display text-xl md:text-3xl text-ink leading-relaxed max-w-3xl mb-24 md:mb-32"
+          className="font-display text-xl md:text-3xl text-ink leading-relaxed max-w-3xl mb-14 md:mb-16"
         />
 
         {/* The fate of every gadget — tossed stickers, last one gold */}
@@ -69,7 +69,7 @@ export default function TheBelief() {
           initial="initial"
           whileInView="whileInView"
           viewport={{ once: false, margin: '-80px' }}
-          className="flex flex-wrap items-center justify-center gap-5 md:gap-8 mb-24 md:mb-28"
+          className="flex flex-wrap items-center justify-center gap-5 md:gap-8 mb-14 md:mb-16"
         >
           {belief.journey.map((step, i) => {
             const tilt = TILTS[i % TILTS.length];

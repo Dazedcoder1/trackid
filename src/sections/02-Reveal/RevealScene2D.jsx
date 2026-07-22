@@ -89,7 +89,7 @@ export default function RevealScene2D({ progressRef }) {
           />
           <span
             ref={el => labelRefs.current[i] = el}
-            className="font-mono text-xs uppercase tracking-widest text-accentDeep whitespace-nowrap mt-4"
+            className="font-mono text-xs uppercase tracking-widest text-gold whitespace-nowrap mt-4"
             style={{ opacity: 0 }}
           >
             {piece.label}

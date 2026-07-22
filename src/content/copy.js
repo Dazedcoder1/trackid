@@ -317,21 +317,30 @@ export const COPY = {
   story: {
     // Kinetic copy — lines are arrays of segments so specific words can be
     // wrapped in sticker chips: { t: 'word', sticker: 'gold'|'pink'|'ghost' }.
+    // Chapter Two is a minute-by-minute timeline: each beat is a timestamp
+    // plus one thought, escalating to 3:42.
     moment: {
       marker: 'Chapter Two — The Moment',
       day: 'A Tuesday',
-      clock: [{ t: '3:42', sticker: 'gold' }, { t: 'PM' }],
-      lines: [
-        [{ t: 'The bell rang at' }, { t: '3:30.', sticker: 'ghost' }],
-        [{ t: 'It’s 3:42, and she isn’t' }, { t: 'home', sticker: 'pink' }, { t: 'yet.' }],
-        [{ t: 'Twelve minutes is nothing.' }],
-        [{ t: 'Twelve minutes is' }, { t: 'everything.', sticker: 'gold' }],
+      intro: [
+        { t: 'The twelve' },
+        { t: 'minutes', sticker: 'gold' },
+        { t: 'every parent knows.' },
       ],
+      beats: [
+        { time: '3:30 PM', segments: [{ t: 'The bell rang.' }] },
+        { time: '3:34 PM', segments: [{ t: 'Her friends are already home.' }] },
+        { time: '3:38 PM', segments: [{ t: 'You check your phone.' }, { t: 'Nothing.', sticker: 'ghost' }] },
+        { time: '3:42 PM', segments: [{ t: 'And she isn’t' }, { t: 'home', sticker: 'pink' }, { t: 'yet.' }] },
+      ],
+      twist: {
+        nothing:    [{ t: 'Twelve minutes is' }, { t: 'nothing.', sticker: 'ghost' }],
+        everything: [{ t: 'Twelve minutes is' }, { t: 'everything.', sticker: 'gold' }],
+      },
       resolution:
         'Every parent knows this silence. We built TrakID so it never has to last longer than a glance.',
       resolutionAccents: ['never', 'a', 'glance.'],
       bridge: 'But a tracker only works if it’s there —',
-      chip: 'No new messages',
     },
 
     belief: {

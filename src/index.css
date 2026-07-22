@@ -260,5 +260,26 @@ html::-webkit-scrollbar {
 .text-outline-bright {
   -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.45);
   color: transparent;
-  text-shadow: 0 0 40px rgba(168, 28, 75, 0.25);
+  text-shadow: 0 0 40px rgba(201, 166, 107, 0.22);
+}
+
+/* ==========================================================
+   PREMIUM DETAILS — sticker shine sweep
+========================================================== */
+.sticker-shine {
+  position: relative;
+  overflow: hidden;
+}
+.sticker-shine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 32%, rgba(255,255,255,0.5) 50%, transparent 68%);
+  transform: translateX(-130%);
+  animation: stickerShine 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes stickerShine {
+  0%, 55% { transform: translateX(-130%); }
+  100%    { transform: translateX(130%); }
 }

@@ -74,28 +74,28 @@ export default function WatchedOver() {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              'radial-gradient(ellipse 70% 55% at 70% 45%, rgba(168,28,75,0.10) 0%, transparent 70%)',
+              'radial-gradient(ellipse 70% 55% at 70% 45%, rgba(42,17,34,0.55) 0%, transparent 70%)',
           }}
         />
 
-        <div className="relative w-full max-w-6xl mx-auto px-6 py-20 lg:py-0">
-          <div className="flex flex-col items-center text-center mb-10 lg:mb-12">
-            <ChapterMarker className="mb-8">{watchedOver.marker}</ChapterMarker>
+        <div className="relative w-full max-w-6xl mx-auto px-6 py-12 lg:py-0">
+          <div className="flex flex-col items-center text-center mb-6 lg:mb-8">
+            <ChapterMarker className="mb-5">{watchedOver.marker}</ChapterMarker>
             <motion.h2
               {...fadeUp}
-              className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-ink tracking-tight leading-tight max-w-3xl mb-4"
+              className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-ink tracking-tight leading-tight max-w-3xl mb-3"
             >
               {watchedOver.headline}
             </motion.h2>
             <motion.p
               {...fadeUp}
-              className="font-body text-sm md:text-base text-slate max-w-xl leading-relaxed"
+              className="font-body text-xs md:text-sm text-slate max-w-xl leading-relaxed"
             >
               {watchedOver.subhead}
             </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-14 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10 items-center">
             {/* THE TIMELINE — scroll moves the day; click scrolls to a moment */}
             <motion.div {...fadeUp} className="lg:col-span-2 flex flex-col">
               {EVENTS.map((event, i) => {
@@ -123,14 +123,14 @@ export default function WatchedOver() {
                     </div>
 
                     <div
-                      className={`pb-6 transition-opacity duration-500 ${
+                      className={`pb-4 transition-opacity duration-500 ${
                         isActive ? 'opacity-100' : 'opacity-45 group-hover:opacity-75'
                       }`}
                     >
-                      <span className="font-mono text-[11px] uppercase tracking-premium text-gold tabular-nums">
+                      <span className="font-mono text-[10px] uppercase tracking-premium text-gold tabular-nums">
                         {event.time}
                       </span>
-                      <h3 className="font-display text-base md:text-lg font-semibold text-ink mt-1 mb-1">
+                      <h3 className="font-display text-sm md:text-base font-semibold text-ink mt-0.5 mb-1">
                         {event.title}
                       </h3>
                       <AnimatePresence initial={false}>
@@ -153,8 +153,8 @@ export default function WatchedOver() {
             </motion.div>
 
             {/* THE MAP + SOS */}
-            <motion.div {...fadeUp} className="lg:col-span-3 flex flex-col gap-5">
-              <div className="glass-card rounded-[28px] p-3 md:p-4">
+            <motion.div {...fadeUp} className="lg:col-span-3 flex flex-col gap-4 w-full max-w-[560px] mx-auto lg:max-w-none">
+              <div className="glass-card rounded-[28px] p-3">
                 <MapScene
                   activeState={activeEvent.state}
                   labels={watchedOver.mapLabels}

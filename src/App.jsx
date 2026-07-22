@@ -129,8 +129,8 @@ function App() {
         {/* Interlude — the particle pendant, statements riding the scroll */}
         <Constellation />
 
-        {/* Chapter 7 — The Beginning, revealed by a brand-pink wipe */}
-        <WipeReveal panelClass="bg-accentDeep">
+        {/* Chapter 7 — The Beginning, revealed by a deep-plum wipe */}
+        <WipeReveal panelClass="bg-stone">
           <TheInvitation />
         </WipeReveal>
 
