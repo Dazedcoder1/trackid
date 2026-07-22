@@ -2,10 +2,13 @@
 export const EASE = [0.22, 1, 0.36, 1];
 
 // The default scroll-reveal pattern — import this, don't write a new one per section.
+// once: false → the story plays PERFECTLY BACKWARDS too: elements settle
+// back to their initial state when they leave the viewport and replay
+// their entrance when scrolled back to, in either direction.
 export const fadeUp = {
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-80px' },
+  viewport: { once: false, margin: '-80px' },
   transition: { duration: 0.6, ease: EASE },
 };
 
@@ -15,5 +18,5 @@ export const staggerContainer = {
   whileInView: {
     transition: { staggerChildren: 0.1 },
   },
-  viewport: { once: true, margin: '-80px' },
+  viewport: { once: false, margin: '-80px' },
 };

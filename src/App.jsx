@@ -3,12 +3,15 @@
 // smooth scroll, renders section slots in order. Section developers
 // uncomment their imports as they build.
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { TrackProvider } from './context/TrackContext';
 import Divider from './components/Divider';
+import StoryProgress from './components/StoryProgress';
+import WipeReveal from './components/WipeReveal';
+import Preloader from './components/Preloader';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -40,6 +43,10 @@ import TheInvitation from './sections/06-TheInvitation/TheInvitation';
 import Closing from './sections/07-Closing/closing';
 
 function App() {
+  // The site mounts (and loads assets) BEHIND the preloader; the hero's
+  // pendant-drop unveiling only starts once the preloader hands off.
+  const [booted, setBooted] = useState(false);
+
   // ---------------------------------------------------------------
   // Lenis smooth-scroll — initialized once at the App root.
   // Synced with GSAP ScrollTrigger so pinning and scrubbed timelines
@@ -81,13 +88,19 @@ function App() {
     <TrackProvider>
       <div className="bg-parchment text-ink font-body antialiased min-h-screen">
 
+        {/* Loading screen — sits above everything until the site is ready */}
+        {!booted && <Preloader onComplete={() => setBooted(true)} />}
+
+        {/* Global story spine: top progress bar + chapter rail */}
+        <StoryProgress />
+
         {/* ============================================================ */}
         {/* SECTION SLOTS — uncomment as each section is built.          */}
         {/* The Divider component goes between each section boundary.    */}
         {/* ============================================================ */}
 
-        {/* Prologue */}
-        <Hero />
+        {/* Prologue — unveiling starts when the preloader hands off */}
+        <Hero start={booted} />
 
         {/* Chapter 1 — The Secret */}
         <Reveal />
@@ -116,8 +129,10 @@ function App() {
         {/* Interlude — the particle pendant, statements riding the scroll */}
         <Constellation />
 
-        {/* Chapter 7 — The Beginning */}
-        <TheInvitation />
+        {/* Chapter 7 — The Beginning, revealed by a brand-pink wipe */}
+        <WipeReveal panelClass="bg-accentDeep">
+          <TheInvitation />
+        </WipeReveal>
 
         {/* Epilogue */}
         <Closing />

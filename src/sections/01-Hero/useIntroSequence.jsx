@@ -14,7 +14,9 @@ const BOUNCE_PEAK_2 = -1.9;
 const BOUNCE_SETTLE_AT = 3.35; // was 4.15 — trimmed back down
 const SPIN_STOP_AT = 4.45;     // was 5.55 — shorter pause after settle too
 
-const LOADER_DURATION = 1.85;
+// Loading now happens in the standalone <Preloader> before the site —
+// this is just a short breath before the unveiling begins.
+const LOADER_DURATION = 0.35;
 
 export function useIntroSequence({
   scrollTransformRef,
@@ -28,6 +30,7 @@ export function useIntroSequence({
   wordmarkRef,
   taglineRef,
   prefersReducedMotion,
+  enabled = true,   // false while the Preloader is still up — the unveiling waits
 }) {
   const [introActive, setIntroActive] = useState(!prefersReducedMotion);
   const rafId = useRef(null);
@@ -66,6 +69,10 @@ export function useIntroSequence({
     tf.z = START_POSE.z;
     tf.rotX = START_POSE.rotX;
     tf.scale = START_POSE.scale;
+
+    // Pendant parked above stage; the sequence itself waits for the
+    // Preloader's handoff.
+    if (!enabled) return;
 
     const tl = gsap.timeline({
       onComplete: () => setIntroActive(false),
@@ -184,7 +191,7 @@ export function useIntroSequence({
 
     return () => tl.kill();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [prefersReducedMotion]);
+  }, [prefersReducedMotion, enabled]);
 
   return introActive;
 }

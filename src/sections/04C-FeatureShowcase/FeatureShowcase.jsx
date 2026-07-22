@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import ChapterMarker from "../../components/ChapterMarker";
+import { KineticLine } from "../../components/Kinetic";
 import { 
   Shield, 
   BatteryCharging, 
@@ -127,16 +129,19 @@ export default function FeatureShowcase() {
   }, []);
 
   return (
-    <section className="bg-parchment py-32 px-6 overflow-hidden">
+    <section id="the-promise" className="bg-parchment py-32 px-6 overflow-hidden">
       <div className="max-w-[1300px] mx-auto">
         
         <div className="text-center mb-24">
-          <span className="font-mono text-xs tracking-[0.3em] uppercase text-gold">
-            Chapter Six — The Promise, Kept
-          </span>
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-ink mt-6 tracking-tight">
-            Built like jewellery. <br className="hidden sm:block"/> Tested like hardware.
-          </h2>
+          <ChapterMarker className="mb-8">Chapter Six — The Promise, Kept</ChapterMarker>
+          <KineticLine
+            segments={[
+              { t: 'Built like jewellery.' },
+              { t: 'Tested', sticker: 'gold' },
+              { t: 'like hardware.' },
+            ]}
+            className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-ink tracking-tight leading-[1.12] max-w-4xl mx-auto"
+          />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16 items-center">

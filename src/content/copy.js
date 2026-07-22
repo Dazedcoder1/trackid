@@ -331,6 +331,7 @@ export const COPY = {
         'Every parent knows this silence. We built TrakID so it never has to last longer than a glance.',
       resolutionAccents: ['never', 'a', 'glance.'],
       bridge: 'But a tracker only works if it’s there —',
+      chip: 'No new messages',
     },
 
     belief: {
@@ -370,6 +371,10 @@ export const COPY = {
     invitation: {
       marker: 'Chapter Seven — The Beginning',
       headline: 'Every story like this begins with a choice.',
+      headlineKinetic: [
+        { t: 'Every story like this begins with a' },
+        { t: 'choice.', sticker: 'gold' },
+      ],
       subhead: 'Tell us whose story you’re writing.',
       audiences: {
         family: {
@@ -396,6 +401,20 @@ export const COPY = {
       proof:   'Chapter Six — The Promise, Kept',
       closing: 'Epilogue',
     },
+
+    // Global story navigation — powers the fixed progress rail.
+    // ids must match the id="" on each section element.
+    nav: [
+      { id: 'reveal',         label: 'The Secret' },
+      { id: 'the-moment',     label: 'The Moment' },
+      { id: 'the-belief',     label: 'The Truth' },
+      { id: 'anatomy',        label: 'The Companions' },
+      { id: 'watched-over',   label: 'Watched Over' },
+      { id: 'the-promise',    label: 'The Promise' },
+      { id: 'constellation',  label: 'Interlude' },
+      { id: 'the-invitation', label: 'The Beginning' },
+      { id: 'epilogue',       label: 'Epilogue' },
+    ],
 
     // Interlude — the particle pendant (OSOS-key-style pinned sequence).
     // Each statement tints the constellation: silver → gold → safe green.

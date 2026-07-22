@@ -29,7 +29,7 @@ function phaseDuration(phase) {
   return phase.end - phase.start;
 }
 
-export default function Hero() {
+export default function Hero({ start = true }) {
   const prefersReducedMotion = useReducedMotion();
 
   const wrapperRef   = useRef(null);
@@ -72,6 +72,7 @@ export default function Hero() {
     wordmarkRef,
     taglineRef,
     prefersReducedMotion,
+    enabled: start,   // Preloader hands off → unveiling begins
   });
 
   // FIX: lock scroll during the intro, restore it after.

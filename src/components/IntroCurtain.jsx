@@ -7,7 +7,6 @@
 
 import { forwardRef } from 'react';
 import { COPY } from '../content/copy';
-import IntroLoader from './IntroLoader';
 import IntroBubbles from './IntroBubbles';
 
 const IntroCurtain = forwardRef(
@@ -37,15 +36,11 @@ const IntroCurtain = forwardRef(
           }}
         />
 
-        {/* The glowing wordmark — the OSOS logo moment */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <span className="intro-glow-wordmark font-display font-bold text-6xl md:text-8xl lg:text-9xl tracking-tight select-none">
-            {COPY.hero.wordmark}
-          </span>
-        </div>
-
-        {/* Loading strip — top center, quiet */}
-        <IntroLoader ref={loaderRef} />
+        {/* Loading + glow wordmark moved to the standalone <Preloader>.
+            This curtain is now purely the unveiling stage: bubbles,
+            corner captions, and the pendant dropping in front. loaderRef
+            still lands on a hidden span so the timeline guards stay happy. */}
+        <span ref={loaderRef} className="hidden" aria-hidden>0</span>
 
         {/* Four-column header row — now light-on-dark */}
         <div className="absolute top-8 left-8 right-8 z-10 flex justify-between pointer-events-none">

@@ -170,14 +170,23 @@ export default function Constellation() {
       const target = COLOR_FOR[statements[idx].color];
       for (let c = 0; c < 3; c++) current[c] += (target[c] - current[c]) * 0.05;
 
-      // Statements + progress rail
+      // Statements + progress rail. The first statement is fully visible
+      // from the moment the section arrives, and the last holds to the
+      // unpin — no blank frames at either edge of the pin.
       statementRefs.current.forEach((el, i) => {
         if (!el) return;
         const band = 1 / statements.length;
         const center = band * (i + 0.5);
-        const o = prefersReducedMotion
-          ? (i === 0 ? 1 : 0)
-          : Math.max(0, 1 - Math.abs(p - center) / (band * 0.52));
+        let o;
+        if (prefersReducedMotion) {
+          o = i === 0 ? 1 : 0;
+        } else if (i === 0 && p <= center) {
+          o = 1;
+        } else if (i === statements.length - 1 && p >= center) {
+          o = 1;
+        } else {
+          o = Math.max(0, 1 - Math.abs(p - center) / (band * 0.52));
+        }
         el.style.opacity = o.toFixed(3);
         el.style.transform = `translateY(${((1 - o) * 18).toFixed(1)}px)`;
       });
@@ -244,7 +253,7 @@ export default function Constellation() {
         const depth = projected[i * 3 + 2];
         const twinkle = prefersReducedMotion ? 0.8 : 0.55 + 0.45 * Math.sin(time * pt.speed * 1.6 + pt.phase);
         const [r, g, b] = pt.gem ? GEM_COLOR : current;
-        const a = pt.alpha * twinkle * (0.35 + 0.65 * (depth - 0.7) / 0.7) * (0.25 + 0.75 * form);
+        const a = pt.alpha * twinkle * (0.35 + 0.65 * (depth - 0.7) / 0.7) * (0.5 + 0.5 * form);
         const size = pt.size * dpr * depth;
 
         // halo

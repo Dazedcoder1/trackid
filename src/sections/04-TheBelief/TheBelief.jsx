@@ -68,7 +68,7 @@ export default function TheBelief() {
           variants={staggerContainer}
           initial="initial"
           whileInView="whileInView"
-          viewport={{ once: true, margin: '-80px' }}
+          viewport={{ once: false, margin: '-80px' }}
           className="flex flex-wrap items-center justify-center gap-5 md:gap-8 mb-24 md:mb-28"
         >
           {belief.journey.map((step, i) => {

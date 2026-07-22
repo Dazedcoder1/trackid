@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { fadeUp } from '../../motion/variants';
 import { COPY } from '../../content/copy';
 import * as Icons from 'lucide-react';
+import OutlineMarquee from '../../components/OutlineMarquee';
 
 const { brandStatement, footerColumns, socialLinks, copyright } = COPY.closing;
 
@@ -19,7 +20,10 @@ export default function Closing() {
   const companyCol = footerColumns.find((c) => c.heading === 'Company');
 
   return (
-    <section className="relative bg-parchment pt-32 pb-16 px-8 md:px-12 overflow-hidden">
+    <section id="epilogue" className="relative bg-parchment pt-20 pb-16 px-8 md:px-12 overflow-hidden">
+      {/* Epilogue banner — the wordmark drifting past in outline, OSOS-style */}
+      <OutlineMarquee text={brandStatement} rows={3} brightRow={1} className="mb-20 -mx-8 md:-mx-12" />
+
       <div className="max-w-6xl mx-auto relative z-10">
       <div className="flex flex-col gap-24">
 

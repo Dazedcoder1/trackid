@@ -2,6 +2,7 @@
 import { useEffect, useRef } from 'react';
 import { COPY } from '../../content/copy';
 import RevealScene2D from './RevealScene2D';
+import ChapterMarker from '../../components/ChapterMarker';
 
 const { eyebrow } = COPY.reveal;
 
@@ -42,15 +43,14 @@ export default function Reveal() {
 
   return (
     <section
+      id="reveal"
       ref={sectionRef}
       className="bg-parchment"
       style={{ height: '280vh' }}
     >
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center gap-8 px-6">
 
-        <span className="font-mono text-xs uppercase tracking-widest text-accentDeep">
-          {eyebrow}
-        </span>
+        <ChapterMarker>{eyebrow}</ChapterMarker>
 
         <h2 className="font-display text-4xl md:text-6xl text-ink text-center leading-tight">
           Engineered to disappear.

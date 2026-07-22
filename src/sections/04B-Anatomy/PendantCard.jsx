@@ -80,7 +80,7 @@ export default function PendantCard({ item, index = 1, total = 4 }) {
           <motion.div
             initial={shouldReduceMotion ? false : { scale: 1.8, opacity: 0, rotate: -18 }}
             whileInView={{ scale: 1, opacity: 1, rotate: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
+            viewport={{ once: false, margin: "-40px" }}
             transition={{ duration: 0.35, ease: [0.34, 1.56, 0.64, 1], delay: 0.15 }}
             className="mt-7 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-white/10 px-3.5 py-2"
           >
@@ -103,7 +103,7 @@ export default function PendantCard({ item, index = 1, total = 4 }) {
                 key={note.title}
                 initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 transition={{ duration: 0.45, delay: noteIndex * 0.08, ease: EASE }}
                 className="flex items-start gap-4"
               >
@@ -210,7 +210,7 @@ export default function PendantCard({ item, index = 1, total = 4 }) {
           <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0, x: -10 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             transition={{ duration: 0.5, ease: EASE }}
             className="absolute left-6 top-6 z-30 flex items-center gap-3"
           >
@@ -226,7 +226,7 @@ export default function PendantCard({ item, index = 1, total = 4 }) {
           <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0, x: 10 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             transition={{ duration: 0.5, ease: EASE }}
             className="absolute bottom-6 right-6 z-30 flex items-center gap-3"
           >

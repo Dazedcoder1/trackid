@@ -152,7 +152,7 @@ function TextGenerate({ text, className = "", highlight = [] }) {
             <motion.span
               initial={{ opacity: 0, rotateX: 70, y: 20 }}
               whileInView={{ opacity: 1, rotateX: 0, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
+              viewport={{ once: false, margin: "-60px" }}
               transition={{
                 duration: 0.55,
                 delay: isHighlighted ? words.length * 0.05 + 0.1 : i * 0.05,
@@ -441,7 +441,7 @@ export default function Anatomy() {
           <motion.div
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             transition={{ duration: 0.6, ease: EASE }}
             style={{ originX: 0.5 }}
             className="h-[2px] w-12 rounded-full bg-gold mx-auto"
@@ -451,7 +451,7 @@ export default function Anatomy() {
             <motion.div
               initial={shouldReduceMotion ? false : { opacity: 0, y: -40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
+              viewport={{ once: false, margin: "-60px" }}
               transition={{ type: "spring", stiffness: 110, damping: 13, delay: 0 }}
             >
               {renderHighlightedWords("Crafted for every personality.", ["personality"])}
@@ -459,7 +459,7 @@ export default function Anatomy() {
             <motion.div
               initial={shouldReduceMotion ? false : { opacity: 0, y: -40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
+              viewport={{ once: false, margin: "-60px" }}
               transition={{ type: "spring", stiffness: 110, damping: 13, delay: 0.15 }}
             >
               {renderHighlightedWords("Designed for everyday protection.", ["protection"])}
