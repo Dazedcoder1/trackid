@@ -301,3 +301,24 @@ html::-webkit-scrollbar {
   -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.5);
   color: transparent;
 }
+
+/* ==========================================================
+   INTRO SMOKE — drifting luminous mist (replaces bubbles)
+========================================================== */
+.intro-smoke {
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  filter: blur(60px);
+  mix-blend-mode: screen;
+  will-change: transform;
+  animation-name: introSmokeDrift;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+@keyframes introSmokeDrift {
+  0%   { transform: translate(-50%, -50%) scale(1)    rotate(0deg); }
+  50%  { transform: translate(-38%, -62%) scale(1.25) rotate(20deg); }
+  100% { transform: translate(-60%, -44%) scale(1.1)  rotate(-14deg); }
+}
