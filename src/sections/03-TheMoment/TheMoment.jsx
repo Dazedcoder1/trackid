@@ -14,6 +14,7 @@ import { motion } from 'framer-motion';
 import { COPY } from '../../content/copy';
 import { EASE } from '../../motion/variants';
 import ChapterMarker from '../../components/ChapterMarker';
+import CornerLabels from '../../components/CornerLabels';
 import { KineticParagraph } from '../../components/Kinetic';
 
 const { moment } = COPY.story;
@@ -71,6 +72,7 @@ export default function TheMoment() {
           style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 40%, rgba(30,20,40,0.6) 0%, transparent 72%)' }}
         />
         <span aria-hidden className="absolute top-14 left-1/2 -translate-x-1/2 font-display font-black text-[40vw] md:text-[24vw] leading-none text-ink/[0.035] pointer-events-none select-none">02</span>
+        <CornerLabels labels={{ tl: 'School’s Out', tr: 'Home By Four', bl: 'Twelve Minutes', br: 'Every Parent Knows' }} tone="text-slate/50" />
 
         <ChapterMarker className="mb-8">{moment.marker}</ChapterMarker>
         <motion.span {...lineIn} className="font-mono text-[11px] md:text-xs uppercase tracking-kicker text-slate mb-6">
